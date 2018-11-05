@@ -1,0 +1,63 @@
+package TSUK_D7_Components;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  dbrtl,
+  mySQLDAC7,
+  bdertl,
+  vcldb,
+  indy,
+  vclAbsDBd7,
+  vclx,
+  TMSD7,
+  vclactnband,
+  xmlrtl,
+  inet,
+  vcljpg,
+  VclSmp;
+
+contains
+  MASmySQLDatabase in '..\Components\MASmySQLDatabase.pas',
+  MASmySQLQuery in '..\Components\MASmySQLQuery.pas',
+  MASmySQLStoredProc in '..\Components\MASmySQLStoredProc.pas',
+  MAS_D7_ComponentsReg in 'MAS_D7_ComponentsReg.pas',
+  MAS_TimerU in '..\Components\MAS_TimerU.pas',
+  MAS_PipesU in '..\Components\MAS_PipesU.pas',
+  MASTCPClientU in '..\Components\MASTCPClientU.pas',
+  MASTCPServerU in '..\Components\MASTCPServerU.pas',
+  cmpTrayIcon in '..\Components\cmpTrayIcon.pas',
+  TSAbsSQLQuery in '..\Components\TSAbsSQLQuery.pas',
+  TSDatasourceU in '..\Components\TSDatasourceU.pas',
+  TSAbsTable in '..\Components\TSAbsTable.pas',
+  MASSaveDialogU in '..\Components\MASSaveDialogU.pas',
+  MASOpenDialogU in '..\Components\MASOpenDialogU.pas',
+  TSAdvEditU in '..\Components\TSAdvEditU.pas',
+  MASdbCtrlGridU in '..\Components\MASdbCtrlGridU.pas',
+  TSABSDatabaseU in '..\Components\TSABSDatabaseU.pas';
+
+end.

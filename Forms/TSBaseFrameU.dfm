@@ -1,0 +1,2 @@
+inherited TSBaseFrame: TTSBaseFrame
+end

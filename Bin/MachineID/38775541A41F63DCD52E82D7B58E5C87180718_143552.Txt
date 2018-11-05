@@ -1,0 +1,18 @@
+ComputerName: VMWARE6
+SerialNumber: None
+Manufacturer: Intel Corporation
+Product: 440BX Desktop Reference Platform
+Model: 
+BuildNumber: 2600
+BuildType: Uniprocessor Free
+Manufacturer: Microsoft Corporation
+Name: Microsoft Windows XP Professional|C:\WINDOWS|\Device\Harddisk0\Partition1
+SerialNumber: 55274-640-3510937-23703
+Version: 5.1.2600
+BIOSVersion: [INTEL  - 6040000|PhoenixBIOS 4.0 Release 6.0     ]
+BuildNumber: 
+Description: PhoenixBIOS 4.0 Release 6.0     
+Manufacturer: Phoenix Technologies LTD
+Name: PhoenixBIOS 4.0 Release 6.0     
+SerialNumber: VMware-56 4d 1f 73 18 77 a1 ea-42 96 33 c2 d1 86 bc 43
+Version: INTEL  - 6040000

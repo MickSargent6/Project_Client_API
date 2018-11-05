@@ -1,0 +1,26 @@
+#------------------------------------------------------------------------------
+VERSION = BWS.01
+#------------------------------------------------------------------------------
+!ifndef ROOT
+ROOT = $(MAKEDIR)\..
+!endif
+#------------------------------------------------------------------------------
+MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
+DCC = $(ROOT)\bin\dcc32.exe $**
+BRCC = $(ROOT)\bin\brcc32.exe $**
+#------------------------------------------------------------------------------
+PROJECTS = swiper32.exe TSUK_D7_Components.bpl touchexport.exe
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+swiper32.exe: ..\swiper32\swiper32.dpr
+  $(DCC)
+
+TSUK_D7_Components.bpl: Packages\TSUK_D7_Components.dpk
+  $(DCC)
+
+touchexport.exe: ..\touchexport\touchexport.dpr
+  $(DCC)
+
+

@@ -1,0 +1,44 @@
+[17/05/18_11:44:22] File Write Time[D7_Activation]Setup Run Correctly
+[17/05/18_11:44:34] File Write Time[D7_Activation]DLL_AS_Ping: Run Correctly
+[17/05/18_11:44:34] File Write Time[D7_Activation]DLL_AS_CheckActivation: Run Correctly
+[17/05/18_11:44:35] File Write Time[D7_Activation]DLL_AS_CheckActivation: Run Correctly
+[17/05/18_11:44:36] File Write Time[D7_Activation]DLL_AS_Activate: Run Correctly
+[17/05/18_11:44:38] File Write Time[D7_Activation]DLL_AS_GetLicense: Run Correctly
+[17/05/18_11:45:13] File Write Time[D7_Activation]DLL_AS_Activate: Run Correctly
+[17/05/18_11:45:15] File Write Time[D7_Activation]DLL_AS_CheckActivation: Run Correctly
+[17/05/18_11:45:16] File Write Time[D7_Activation]DLL_AS_Ping: Run Correctly
+[17/05/18_11:45:16] File Write Time[D7_Activation]DLL_AS_Ping: Run Correctly
+[17/05/18_11:45:17] File Write Time[D7_Activation]DLL_AS_Ping: Run Correctly
+[17/05/18_11:45:18] File Write Time[D7_Activation]DLL_AS_Ping: Run Correctly
+[17/05/18_11:45:18] File Write Time[D7_Activation]DLL_AS_Ping: Run Correctly
+[17/05/18_11:45:19] File Write Time[D7_Activation]DLL_AS_Ping: Run Correctly
+[17/05/18_11:45:19] File Write Time[D7_Activation]DLL_AS_Ping: Run Correctly
+[17/05/18_11:45:20] File Write Time[D7_Activation]DLL_AS_Ping: Run Correctly
+[17/05/18_11:45:20] File Write Time[D7_Activation]DLL_AS_Ping: Run Correctly
+[17/05/18_11:45:20] File Write Time[D7_Activation]DLL_AS_Ping: Run Correctly
+[17/05/18_11:45:21] File Write Time[D7_Activation]DLL_AS_Ping: Run Correctly
+[17/05/18_11:45:31] File Write Time[D7_Activation]DLL_AS_CloseDown: Run Correctly
+[17/05/18_11:45:58] File Write Time[D7_Activation]Setup Run Correctly
+[17/05/18_11:46:01] File Write Time[D7_Activation]DLL_AS_CloseDown: Run Correctly
+[17/05/18_11:46:30] File Write Time[D7_Activation]Setup Run Correctly
+[17/05/18_11:46:31] File Write Time[D7_Activation]DLL_AS_Ping: Run Correctly
+[17/05/18_11:46:36] File Write Time[D7_Activation]DLL_AS_CloseDown: Run Correctly
+[17/05/18_14:38:27] File Write Time[D7_Activation]Setup Run Correctly
+[17/05/18_14:38:32] File Write Time[D7_Activation]Error: Exception.DLL_AS_CheckActivation. Exception Error: Error: fnCheckActivation. Login Failed: User Login Failed
+[17/05/18_14:38:35] File Write Time[D7_Activation]Error: Exception.DLL_AS_Activate. Exception Error: Error: fnActivate. Login Failed: User Login Failed
+[17/05/18_14:40:17] File Write Time[D7_Activation]DLL_AS_Ping: Run Correctly
+[17/05/18_14:40:19] File Write Time[D7_Activation]DLL_AS_CheckActivation: Run Correctly
+[17/05/18_14:40:21] File Write Time[D7_Activation]DLL_AS_Activate: Run Correctly
+[17/05/18_14:44:29] File Write Time[D7_Activation]DLL_AS_CheckActivation: Run Correctly
+[17/05/18_14:44:31] File Write Time[D7_Activation]DLL_AS_Activate: Run Correctly
+[17/05/18_14:44:38] File Write Time[D7_Activation]DLL_AS_CheckActivation: Run Correctly
+[17/05/18_14:44:39] File Write Time[D7_Activation]DLL_AS_Activate: Run Correctly
+[17/05/18_14:46:45] File Write Time[D7_Activation]DLL_AS_CloseDown: Run Correctly
+[17/05/18_14:46:46] File Write Time[D7_Activation]Setup Run Correctly
+[17/05/18_14:46:48] File Write Time[D7_Activation]Error: Exception.DLL_AS_CheckActivation. Exception Error: Error: fnCheckActivation. Login Failed: Error: fnConnect. Error: Error: Int_fnCreateMutex. Error: Error: Int_fnCreateMutex. Failed to Assign Main Form Handle
+[17/05/18_14:46:51] File Write Time[D7_Activation]DLL_AS_CloseDown: Run Correctly
+[17/05/18_14:46:57] File Write Time[D7_Activation]Setup Run Correctly
+[17/05/18_14:46:58] File Write Time[D7_Activation]DLL_AS_CheckActivation: Run Correctly
+[17/05/18_14:46:59] File Write Time[D7_Activation]DLL_AS_Activate: Run Correctly
+[17/05/18_14:47:02] File Write Time[D7_Activation]DLL_AS_GetLicense: Run Correctly
+[17/05/18_14:47:53] File Write Time[D7_Activation]DLL_AS_CloseDown: Run Correctly
