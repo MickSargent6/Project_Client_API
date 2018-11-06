@@ -221,18 +221,20 @@ Const
 
   //
   //
-  cLOCAL_CONFIG	       = 'CONFIG';
-    cLC_IGNORE_MAPPING = 'IGNORE_MAPPING';
-  	cLC_INTERVAL       = 'INTERVAL';
-    cLC_OLDSTYLE       = 'OLDSTYLE';
-    cLC_ONLY_LOCAL_GUI = 'ONLY_LOCAL_GUI';
-    cLC_SHOW_POPUP     = 'SHOW_POPUP';
+  cLOCAL_CONFIG	          = 'CONFIG';
+    cLC_IGNORE_MAPPING    = 'IGNORE_MAPPING';
+  	cLC_INTERVAL          = 'INTERVAL';
+    cLC_OLDSTYLE          = 'OLDSTYLE';
+    cLC_ONLY_LOCAL_GUI    = 'ONLY_LOCAL_GUI';
+    cLC_SHOW_POPUP        = 'SHOW_POPUP';
 
     // Alto
-    cLC_KEY_PERSONNEL    = 'KeyPersonnel';
-      cLC_KP_INTERVAL    = 'Interval';
-      cLC_KP_SHOW_INONLY = 'ShowInOnly';
+    cLC_KEY_PERSONNEL     = 'KeyPersonnel';
+      cLC_KP_INTERVAL     = 'Interval';
+      cLC_KP_SHOW_INONLY  = 'ShowInOnly';
 
+  cDEBUG                  = 'Debug';
+    cDEBUG_MIN_KP_REFRESH = 'MinRefresh';
 
   // Polling Stats Info
   cNAME_FILES          = 'FILES';
