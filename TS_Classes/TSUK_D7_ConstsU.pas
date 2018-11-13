@@ -548,6 +548,7 @@ Const
   cFLD_PAY_RATES_NAME                         = 'NAME';
   cFLD_PAY_RATES_EFFECTIVE_DATE               = 'EFFECTIVEDATE';
   cFLD_PAY_RATES_JUST_EFFECTIVE_DATE          = 'JustEffectiveDate';
+  cFLD_PAY_RATES_VALID_UNTIL                  = 'VALID_UNTIL';
   cFLD_PAY_RATES_RATE0                        = 'STANDARDRATE';
   cFLD_PAY_RATES_RATE1                        = 'RATE1';
   cFLD_PAY_RATES_RATE2                        = 'RATE2';
@@ -664,6 +665,8 @@ Const
   cSQL_PAYROLL_REF_INSERT                      = 'PAYROLL_INSERT';
   cSQL_LOOKUP_CODES                            = 'LOOKUP_CODES';
   cSQL_DEL_IOBOARD                             = 'DEL_IOBOARD';
+  cSQL_QRY_EMP_PAYRATE                         = 'QRY_EMP_PAYRATE';
+
 
 
   // Validation Checks for GUI, moved from Magic numbers to Constants

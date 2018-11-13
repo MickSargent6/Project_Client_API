@@ -1,6 +1,6 @@
 inherited formTSBaseFormModal: TformTSBaseFormModal
   Left = 124
-  Top = 172
+  Top = 170
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'formTSBaseFormModal'

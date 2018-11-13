@@ -1,6 +1,6 @@
 inherited formTSBaseSimpleEntryForm: TformTSBaseSimpleEntryForm
-  Left = 1184
-  Top = 576
+  Left = 1173
+  Top = 566
   Caption = 'UnKnown'
   ClientHeight = 325
   ClientWidth = 594
