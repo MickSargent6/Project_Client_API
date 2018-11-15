@@ -57,6 +57,9 @@ Type
     Rate3:           tTSCurrencyRec;
   end;
 
+  tAbsenceType = (atNone, atEmpSick, atEmpHoliday, atEmpPaidLeave, atEmpUnPaidLeave, atGlobalStatutory,      
+                   atGlobalOther, atGlobalHoliday, atGlobalPaidLeave, atGlobalUnPaidLeave);
+
 Const
     cDEFAULT_IP_ADDRESS                     = '127.0.0.1';
     //
@@ -221,20 +224,23 @@ Const
 
   //
   //
-  cLOCAL_CONFIG	          = 'CONFIG';
-    cLC_IGNORE_MAPPING    = 'IGNORE_MAPPING';
-  	cLC_INTERVAL          = 'INTERVAL';
-    cLC_OLDSTYLE          = 'OLDSTYLE';
-    cLC_ONLY_LOCAL_GUI    = 'ONLY_LOCAL_GUI';
-    cLC_SHOW_POPUP        = 'SHOW_POPUP';
+  cLOCAL_CONFIG	                = 'CONFIG';
+    cLC_IGNORE_MAPPING          = 'IGNORE_MAPPING';
+  	cLC_INTERVAL                = 'INTERVAL';
+    cLC_OLDSTYLE                = 'OLDSTYLE';
+    cLC_ONLY_LOCAL_GUI          = 'ONLY_LOCAL_GUI';
+    cLC_SHOW_POPUP              = 'SHOW_POPUP';
 
     // Alto
-    cLC_KEY_PERSONNEL     = 'KeyPersonnel';
-      cLC_KP_INTERVAL     = 'Interval';
-      cLC_KP_SHOW_INONLY  = 'ShowInOnly';
+    cLC_KEY_PERSONNEL           = 'KeyPersonnel';
+      cLC_KP_INTERVAL           = 'Interval';
+      cLC_KP_SHOW_INONLY        = 'ShowInOnly';
 
-  cDEBUG                  = 'Debug';
-    cDEBUG_MIN_KP_REFRESH = 'MinRefresh';
+  cDEBUG                        = 'Debug';
+    cDEBUG_MIN_KP_REFRESH       = 'MinRefresh';
+    cDEBUG_ENABLED_MIN_INTERVAL = 'EnableMinRefreshInterval';
+    // Ini Debug File
+    cDEBUG_AMPM_TEST            = 'AMPMDefault';  // 0 = AM 1 = PM
 
   // Polling Stats Info
   cNAME_FILES          = 'FILES';
@@ -544,6 +550,7 @@ Const
   cFLD_IO_INT_TIME                            = 'INTTIME';
   cFLD_IO_DAYS_SINCE                          = 'DaysSince';
   cFLD_IO_DISPLAYNAME                         = 'DspName';
+  cFLD_IO_ABSENCESTATUS                       =   'AbsenceStatus';
 
   cFLD_PAY_RATES_NAME                         = 'NAME';
   cFLD_PAY_RATES_EFFECTIVE_DATE               = 'EFFECTIVEDATE';
@@ -666,8 +673,8 @@ Const
   cSQL_LOOKUP_CODES                            = 'LOOKUP_CODES';
   cSQL_DEL_IOBOARD                             = 'DEL_IOBOARD';
   cSQL_QRY_EMP_PAYRATE                         = 'QRY_EMP_PAYRATE';
-
-
+  //
+  cSQL_QRY_EMP_ABSENCE_DATES                   = 'QRY_ABSENCE_DATES';
 
   // Validation Checks for GUI, moved from Magic numbers to Constants
   cGUI_UNIQUE_ID_MAX_VALUE                     = 999999999;      //
@@ -682,9 +689,28 @@ Const
   cPAYROLL_SYSTEMS_1                           = 1;
   cPAYROLL_SYSTEMS_2                           = 2;
 
+  // Employee Absence Values
+  cABSENCE_NONE            = 0;
+  cABSENCE_SICK            = 1;
+  cABSENCE_HOLIDAY         = 2;
+  cABSENCE_PAIDLEAVE       = 3;
+  cABSENCE_UNPAIDLEAVE     = 4;
   //
-  Function fnStrToLicenseOptions (Const aLicenseOptions: String): tLicenseOptions;
-  Function fnLicenseOptionsToStr (Const aLicenseOptions: tLicenseOptions): String;
+  cABSENCE_GBL_STATUTORY   = 5;
+  cABSENCE_GBL_OTHER       = 6;
+  cABSENCE_GBL_HOLIDAY     = 7;
+  cABSENCE_GBL_PAIDLEAVE   = 8;
+  cABSENCE_GBL_UNPAIDLEAVE = 9;
+
+  cFLD_ABSENCE_RECORDTYPE                      = 'RecordType';
+  cFLD_ABSENCE_EMPNAME                         = 'EmpName';
+  cFLD_ABSENCE_TRANSTYPE                       = 'TransType';
+  cFLD_ABSENCE_AM                              = 'AM';
+  cFLD_ABSENCE_PM                              = 'PM';
+
+  //
+  Function fnStrToLicenseOptions        (Const aLicenseOptions: String): tLicenseOptions;
+  Function fnLicenseOptionsToStr        (Const aLicenseOptions: tLicenseOptions): String;
   //
   Function fnStrToTimeSystemsRegions    (Const aTimeSystemsRegions: String): tTimeSystemsRegions;
   Function fnTimeSystemsRegionsToStr    (Const aTimeSystemsRegions: tTimeSystemsRegions): String;
@@ -703,7 +729,10 @@ Const
   Function fnStrToVerboseLevel          (Const aValue: String): tTSVerboseLevel;
   Function fnVerboseLevelToDescription  (Const aValue: tTSVerboseLevel): String;
   //
-  Function fnCmdToDesc (Const aCommand: Integer): String;
+  Function fnCmdToDesc                  (Const aCommand: Integer): String;
+  //
+  Function fnAbsenceTypeToInt           (Const aValue: tAbsenceType): Integer;
+  Function fnIntToAbsenceType           (Const aValue: Integer): tAbsenceType;
 
 implementation
 
@@ -912,6 +941,37 @@ begin
     cHWC_CMD_RESTART_UNITS:  Result := 'Restart Unit';
     cHWC_CMD_CLEAR_ADMIN:    Result := 'Clear Admin';
     else                     Result := fnTS_Format ('Unknown Command (%d', [aCommand]);
+  end;
+end;
+
+// Routine: fnCmdToDesc
+// Author: M.A.Sargent  Date 02/08/18  Version: V1.0
+//
+// Notes:
+//
+// 1 = Sick 2 = Holiday 3 = Paid Leave 4 = UnPaid Leave
+// (Global Calendar only, are based by a factor of 10)
+// 5 = Statutory 6 = Other 7 = Holiday 8 = Paid Leave 9
+//
+Function fnAbsenceTypeToInt (Const aValue: tAbsenceType): Integer;
+begin
+  Result := Ord (aValue);
+end;
+Function fnIntToAbsenceType (Const aValue: Integer): tAbsenceType;
+begin
+  Case aValue of
+    cABSENCE_NONE:            Result := atNone;
+    cABSENCE_SICK:            Result := atEmpSick;
+    cABSENCE_HOLIDAY:         Result := atEmpHoliday;
+    cABSENCE_PAIDLEAVE:       Result := atEmpPaidLeave;
+    cABSENCE_UNPAIDLEAVE:     Result := atEmpUnPaidLeave;
+    //
+    cABSENCE_GBL_STATUTORY:   Result := atGlobalStatutory;
+    cABSENCE_GBL_OTHER:       Result := atGlobalOther;
+    cABSENCE_GBL_HOLIDAY:     Result := atGlobalHoliday;
+    cABSENCE_GBL_PAIDLEAVE:   Result := atGlobalPaidLeave;
+    cABSENCE_GBL_UNPAIDLEAVE: Result := atGlobalUnPaidLeave;
+    else Raise Exception.CreateFmt ('Error: fnIntToAbsenceType. Unknow Value passed to Routine. (%d)', [aValue]);
   end;
 end;
 

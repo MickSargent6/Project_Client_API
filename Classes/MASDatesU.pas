@@ -84,6 +84,8 @@ Type
   // Function to add st, nd, td or th to the day
   Function fnDayStr (Const aDay: Word): String; overload;
   Function fnDayStr (Const aDate: TDate): String; overload;
+  //
+  Function fnIsAM    (Const aDate: TDateTime): Boolean;
 
 implementation
 
@@ -459,6 +461,19 @@ begin
     else     Result := 'th';
   end;
   Result := (IntToStr (aDay) + Result);
+end;
+
+// Routine: fnIsAM
+// Author: M.A.Sargent  Date: 23/10/13  Version: V1.0
+//
+// Notes: HourOf return 0 to 23, so 0 to 11 (and could 11.58.59) is AM
+//
+Function fnIsAM (Const aDate: TDateTime): Boolean;
+begin
+  Case HourOf (aDate) of
+    0..11: Result := True;
+    else   Result := False;
+  end;
 end;
 
 end.

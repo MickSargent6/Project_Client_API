@@ -383,7 +383,7 @@ end;
 // Routine: UContainsText and ContainsText
 // Author: M.A.Sargent  Date: 29/04/12  Version: V1.0
 //
-// Notes:
+// Notes: 0 = False 1 = True is the default action of StrToBool etc
 //
 Function fnIntToBoolean (Const aInt: Integer): Boolean;
 begin
