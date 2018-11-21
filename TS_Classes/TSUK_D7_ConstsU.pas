@@ -633,7 +633,7 @@ Const
 
   cTRANSACTION_OUT                            = 0;
   cTRANSACTION_IN                             = 1;
-  // Not a Trans table value used by IOBaord in Swipe32 to display old Transactions
+  // Not a Trans table value used by IOBoard in Swipe32 to display old Transactions
   cTRANSACTION_OUT_OLD                        = 2;
   cTRANSACTION_IN_OLD                         = 3;
   //
