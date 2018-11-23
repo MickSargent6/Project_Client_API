@@ -1,5 +1,5 @@
 inherited TSBaseForm_Project: TTSBaseForm_Project
-  Left = 1338
+  Left = 1336
   Top = 622
   Caption = 'TSBaseForm_Project'
   OldCreateOrder = True

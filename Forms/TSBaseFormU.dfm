@@ -1,5 +1,5 @@
 object TSBaseForm: TTSBaseForm
-  Left = 872
+  Left = 871
   Top = 303
   Width = 554
   Height = 302

@@ -9,7 +9,7 @@ MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
 DCC = $(ROOT)\bin\dcc32.exe $**
 BRCC = $(ROOT)\bin\brcc32.exe $**
 #------------------------------------------------------------------------------
-PROJECTS = swiper32.exe TSUK_D7_Components.bpl touchexport.exe
+PROJECTS = swiper32.exe TSUK_D7_Components.bpl touchexport.exe ttioboard.exe OutputDb.exe
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
@@ -21,6 +21,12 @@ TSUK_D7_Components.bpl: Packages\TSUK_D7_Components.dpk
   $(DCC)
 
 touchexport.exe: ..\touchexport\touchexport.dpr
+  $(DCC)
+
+ttioboard.exe: ..\ttinoutboard\ttioboard.dpr
+  $(DCC)
+
+OutputDb.exe: C:\Junk\OutptutDb\OutputDb.dpr
   $(DCC)
 
 
