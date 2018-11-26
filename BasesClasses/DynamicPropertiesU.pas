@@ -144,7 +144,6 @@ Function tDynamicProperties.Int_AssignValues (Const aFormName: String; aComponen
 var
   lvSection: String;
   x: Integer;
-  lvTotal: Integer;
   lvRec: tPropertyItem;
   lvRes: tOKVariant;
   lvPair: tValuePair;
@@ -165,7 +164,7 @@ begin
     fIniFile.ReadSectionValues (lvSection, tStrings (fItemsList));
     if (fItemsList.Count > 0) then begin
       // load the Component properties
-      lvTotal := fProps.fnLoadProperties (aComponent);
+      fProps.fnLoadProperties (aComponent);
 
       for x := 0 to fItemsList.Count-1 do begin
         lvPair := GetValuePair (fItemsList[x]);

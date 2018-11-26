@@ -134,10 +134,16 @@ begin
   ReRun (Nil, DisableCtrls);
 end;
 
+// Routine: ReRun
+// Author: M.A.Sargent  Date: 23/11/18  Version: V1.0
+//
+// Notes: Keep the compiler happy
+//
 procedure tMASmySQLQuery.ReRun (Const DisableCtrls, KeepBookMark: Boolean);
 var
   lvBookMark: tBookMark;
 begin
+  lvBookMark := Nil;
   if KeepBookMark then lvBookMark := Self.GetBookmark;
   Try
     ReRun (Nil, DisableCtrls);

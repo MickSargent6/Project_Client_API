@@ -1,5 +1,5 @@
 //
-// Unit: MAS_MySql_QueryCacheU
+// Unit: MAS_QueryCacheU
 // Author: M.A.Sargent  Date: 13/06/18  Version: V1.0
 //
 // Notes: Cache is used to in TS to create tQuery Components, they can then:
@@ -46,7 +46,7 @@ Type
     Procedure ClearCacheItem;
     //
     Procedure SetMaxCacheSize    (Const Value: Integer);
-    Function  fnIntToCacheOption (Const aInt: Integer): tCacheOption;
+    // for future use Function  fnIntToCacheOption (Const aInt: Integer): tCacheOption;
   Protected
     Function  Int_fnSQLIsCached  (Const aName: String): Boolean;
     Function  Int_fnSQLToCache   (Const aName: String; aSQL: String; Const aCacheAction: tCacheAction = caIgnore): String;
@@ -238,7 +238,6 @@ begin
             Result.Qry.Tag := Ord (aCacheOption);
             AssignSQL (Result.Qry, Int_fnSQLToCache (aName, aSQL, aCacheAction));
             if fPrepareOnCreate then DoPrepare (Result.Qry);
-            //fCache.InsertObject (0, aName, Result.Qry);
             fCache.AddObject (aName, Result.Qry);
           Except
             Result.Qry.Free;
@@ -270,7 +269,6 @@ end;
 Function tSQLCache.fnDoGetSQL (Const aName: String; var aSQL: String): Boolean;
 begin
   Result := False;
-  if Assigned (fOnSQLEvent) then fOnSQLEvent (aName, aSQL);
   if Assigned (fOnSQLEvent) then fOnSQLEvent (aName, aSQL);
 end;
 
@@ -321,22 +319,22 @@ end;
 // Routine: fnIntToCacheOption
 // Author: M.A.Sargent  Date: 21/10/18  Version: V1.0
 //
-// Notes:
+// Notes: Future use
 //
-Function tSQLCache.fnIntToCacheOption (Const aInt: Integer): tCacheOption;
+{Function tSQLCache.fnIntToCacheOption (Const aInt: Integer): tCacheOption;
 begin
   Case aInt of
     0:   Result := coDefault;
     1:   Result := coNoFree;
-    2:   Result := coFreeOnClose;
+    else Result := coFreeOnClose;
     //3:   Result := coUnique;
     //else Result := coUniqueFreeClose;
   end;
-end;
+end;}
 
 Function tSQLCache.fnDbConnection: tObject;
 begin
-  Result := Self.fDbConnection; 
+  Result := Self.fDbConnection;
 end;
 
 Procedure tSQLCache.AssignSQL (Const aDataSet: tDataSet; Const aSQL: String);

@@ -674,6 +674,11 @@ Const
   cSQL_DEL_IOBOARD                             = 'DEL_IOBOARD';
   cSQL_QRY_EMP_PAYRATE                         = 'QRY_EMP_PAYRATE';
   //
+  cSQL_DEL_EMPLOYEE                            = 'DEL_EMPLOYEE';  
+  cSQL_DEL_RULE_ASSIGNMENT                     = 'DEL_RULE_ASSIGNMENT';
+  cSQL_DEL_SHIFT_ASSIGNMENT                    = 'DEL_SHIFT_ASSIGNMENT';
+  cSQL_DEL_WORKP_ASSIGNMENT                    = 'DEL_WORKP_ASSIGNMENT';
+  //
   cSQL_QRY_EMP_ABSENCE_DATES                   = 'QRY_ABSENCE_DATES';
 
   // Validation Checks for GUI, moved from Magic numbers to Constants

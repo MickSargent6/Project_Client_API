@@ -141,16 +141,19 @@ end;
 
 // Routine: fnGetHardDiskSerial
 // Author: M.A.Sargent  Date: 04/07/11  Version: V1.0
+//         M.A.Sargent        23/11/18           V2.0
 //
 // Notes:
+//  V2.0: Updated to keep the compiler happy
 //
 function fnGetHardDiskSerial (Const DriveLetter: Char): DWORD;
 var
   NotUsed:     DWORD;
+  NotUsed2:    DWORD;
   VolumeFlags: DWORD;
-  VolumeInfo:  array[0..MAX_PATH] of Char;
 begin
-  GetVolumeInformation(PChar(DriveLetter + ':\'), nil, SizeOf(VolumeInfo), @Result, NotUsed, VolumeFlags, nil, 0);
+  NotUsed2 := 0;
+  GetVolumeInformation(PChar(DriveLetter + ':\'), nil, NotUsed2, @Result, NotUsed, VolumeFlags, nil, 0);
 end;
 function fnGetHardDiskSerial_AsString (Const DriveLetter: Char): String;
 var

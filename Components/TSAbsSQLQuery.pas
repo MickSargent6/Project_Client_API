@@ -196,10 +196,16 @@ begin
   ReRun (Nil, DisableCtrls);
 end;
 
-procedure tTSAbsQuery.ReRun (Const DisableCtrls, KeepBookMark: Boolean);
+// Routine: ReRun
+// Author: M.A.Sargent  Date: 23/11/18  Version: V1.0
+//
+// Notes: Updated to keep the compter happy
+//
+Procedure tTSAbsQuery.ReRun (Const DisableCtrls, KeepBookMark: Boolean);
 var
   lvBookMark: tBookMark;
 begin
+  lvBookMark := Nil;
   if KeepBookMark then lvBookMark := Self.GetBookmark;
   Try
     ReRun (Nil, DisableCtrls);

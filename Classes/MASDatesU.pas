@@ -9,6 +9,7 @@
 //         M.A.Sargent        05/03/15           V7.0
 //         M.A.Sargent        13/05/18           V8.0
 //         M.A.Sargent        02/08/18           V9.0
+//         M.A.Sargent        26/11/18           V10.0
 //
 // Notes: Functions fnStrToDate to convert a string date/datetime into a date tvariable
 //  V2.0: Add sDDMMYYYY_HHMMSS
@@ -19,6 +20,7 @@
 //  V7.0: Add time format types
 //  V8.0: Updated to remove FormatSettings in fnStrToDate
 //  V9.0: Updated to fix bug and add another method
+// V10.0: Updated fnLocalisedDate
 //
 unit MASDatesU;
 
@@ -31,8 +33,10 @@ Type
   tStringDates = (sdNone, sdHHMMSS, sdHHMM,
                    sdDDMMYY, sdDDMMYYYY, sdDDMMMYY, sdDDMMMYYYY, sdMM, sdMMM,
                     sdDDMMYYYY_HHMMSS, sdDDMMYY_HHMMSS, sdDDMMYYYY_HHMM, sdDDMMYY_HHMM,
-                     // The two below are NOT Localized
-                      sdYYYYMMDD_HHMMSS, sdYYYYMMDD_HHMM);
+                     //
+                     sdDD_SHORT_MTH_HHMM,
+                      // The two below are NOT Localized
+                       sdYYYYMMDD_HHMMSS, sdYYYYMMDD_HHMM);
   //
   Function fnLocalisedDate (Const aFormat: tStringDates; Const aRemoveSeparators: Boolean = True): String;
 
@@ -94,24 +98,54 @@ Uses MASCommonU, DateUtils, TypInfo;
 var
   gblDateToday: tDate = 0;
 
+// Routine: fnLocalisedDate
+// Author: M.A.Sargent  Date: 26/11/18  Version: V1.0
+//
+// Notes: Updated to:
+//        1. Add function fnTimeFormat to repalce hh:mm with hh:nn Delphi format characters
+//        2. Add sdDD_SHORT_MTH_HHMM, should return d mmm hh:nn or USA mmm d hh:nn
+//
 Function fnLocalisedDate (Const aFormat: tStringDates; Const aRemoveSeparators: Boolean): String;
 var
  lvFormat: tFormatSettings;
+ // using the Delphi date format stuff minutes should be nn or n, the below did seem to work
+ // but ShortTimeFormat always contains mm so to avoid problems convert to nn in th fnTimeFormat
+ // function 
+ Function fnTimeFormat (Const aFormat: String): String;
+ begin
+   Result := StringReplace (aFormat, 'M', 'N',    [rfIgnoreCase, rfReplaceAll]);
+ end;
 begin
   Try
     lvFormat := fnTS_LocaleSettings;
     Case aFormat of
       sdNone:;
-      sdHHMMSS:          Result := lvFormat.LongTimeFormat;
-      sdHHMM:            Result := lvFormat.ShortTimeFormat;
+      sdHHMMSS:          Result := fnTimeFormat (lvFormat.LongTimeFormat);
+      sdHHMM:            Result := fnTimeFormat (lvFormat.ShortTimeFormat);
       sdDDMMYY:          Result := lvFormat.ShortDateFormat;
       sdDDMMYYYY:        Result := lvFormat.ShortDateFormat;
       sdDDMMMYY:         Result := lvFormat.LongDateFormat;
       sdDDMMMYYYY:       Result := lvFormat.LongDateFormat;
-      sdDDMMYYYY_HHMMSS: Result := lvFormat.ShortDateFormat + '_' + lvFormat.LongTimeFormat;
-      sdDDMMYY_HHMMSS:   Result := lvFormat.ShortDateFormat + '_' + lvFormat.LongTimeFormat;
-      sdDDMMYYYY_HHMM:   Result := lvFormat.ShortDateFormat + '_' + lvFormat.ShortTimeFormat;
-      sdDDMMYY_HHMM:     Result := lvFormat.ShortDateFormat + '_' + lvFormat.ShortTimeFormat;
+      sdDDMMYYYY_HHMMSS: Result := lvFormat.ShortDateFormat + '_' + fnTimeFormat (lvFormat.LongTimeFormat);
+      sdDDMMYY_HHMMSS:   Result := lvFormat.ShortDateFormat + '_' + fnTimeFormat (lvFormat.LongTimeFormat);
+      sdDDMMYYYY_HHMM:   Result := lvFormat.ShortDateFormat + '_' + fnTimeFormat (lvFormat.ShortTimeFormat);
+      sdDDMMYY_HHMM:     Result := lvFormat.ShortDateFormat + '_' + fnTimeFormat (lvFormat.ShortTimeFormat);
+      //
+      sdDD_SHORT_MTH_HHMM: begin
+                         // using the Short Date Format dd/mm/yy or versions of m/d/y
+                         Result := lvFormat.ShortDateFormat + ' ' + fnTimeFormat (lvFormat.ShortTimeFormat);
+                         Result := StringReplace (Result, 'Y', '',  [rfIgnoreCase, rfReplaceAll]);   // Remove the Year
+                         // Remove the M, MM or MMM
+                         Result := StringReplace (Result, 'M', '#',   [rfIgnoreCase]);                 // Remove the first Month with '#'
+                         Result := StringReplace (Result, 'M', '',    [rfIgnoreCase, rfReplaceAll]);   // remove the rest if they exist
+                         Result := StringReplace (Result, '#', 'MMM', [rfIgnoreCase]);                 // replace with MMM
+                         //
+                         Result := StringReplace (Result, 'D', '#',   [rfIgnoreCase]);                 // Remove the first Day with '#'
+                         Result := StringReplace (Result, 'D', '',    [rfIgnoreCase, rfReplaceAll]);   // remove the rest if they exist
+                         Result := StringReplace (Result, '#', 'D',   [rfIgnoreCase]);                 // replace with D
+                         //
+                         Result := StringReplace (Result, lvFormat.DateSeparator, ' ', [rfReplaceAll]);
+      end;
       // Month Only
       sdMM:              Result := 'MM';
       sdMMM:             Result := 'MMM';
