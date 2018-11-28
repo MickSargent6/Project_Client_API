@@ -10,6 +10,7 @@
 //         M.A.Sargent        13/05/18           V8.0
 //         M.A.Sargent        02/08/18           V9.0
 //         M.A.Sargent        26/11/18           V10.0
+//         M.A.Sargent        26/11/18           V11.0
 //
 // Notes: Functions fnStrToDate to convert a string date/datetime into a date tvariable
 //  V2.0: Add sDDMMYYYY_HHMMSS
@@ -21,6 +22,9 @@
 //  V8.0: Updated to remove FormatSettings in fnStrToDate
 //  V9.0: Updated to fix bug and add another method
 // V10.0: Updated fnLocalisedDate
+// V11.0: Updated fnLocalisedDate:
+//          1. Fixed USA AP/PM problem,
+//          2.
 //
 unit MASDatesU;
 
@@ -36,7 +40,7 @@ Type
                      //
                      sdDD_SHORT_MTH_HHMM,
                       // The two below are NOT Localized
-                       sdYYYYMMDD_HHMMSS, sdYYYYMMDD_HHMM);
+                       sdYYYYMMDD_HHMMSS, sdYYYYMMDD_HHMM, sdYYYYMMDD_HHMMSSZZZ);
   //
   Function fnLocalisedDate (Const aFormat: tStringDates; Const aRemoveSeparators: Boolean = True): String;
 
@@ -104,37 +108,33 @@ var
 // Notes: Updated to:
 //        1. Add function fnTimeFormat to repalce hh:mm with hh:nn Delphi format characters
 //        2. Add sdDD_SHORT_MTH_HHMM, should return d mmm hh:nn or USA mmm d hh:nn
+//        3. Add sdYYYYMMDD_HHMMSSZZZ
 //
 Function fnLocalisedDate (Const aFormat: tStringDates; Const aRemoveSeparators: Boolean): String;
 var
  lvFormat: tFormatSettings;
- // using the Delphi date format stuff minutes should be nn or n, the below did seem to work
- // but ShortTimeFormat always contains mm so to avoid problems convert to nn in th fnTimeFormat
- // function 
- Function fnTimeFormat (Const aFormat: String): String;
- begin
-   Result := StringReplace (aFormat, 'M', 'N',    [rfIgnoreCase, rfReplaceAll]);
- end;
+ lvTmp:    String;
 begin
   Try
     lvFormat := fnTS_LocaleSettings;
     Case aFormat of
       sdNone:;
-      sdHHMMSS:          Result := fnTimeFormat (lvFormat.LongTimeFormat);
-      sdHHMM:            Result := fnTimeFormat (lvFormat.ShortTimeFormat);
+      sdHHMMSS:          Result := lvFormat.LongTimeFormat;
+      sdHHMM:            Result := lvFormat.ShortTimeFormat;
       sdDDMMYY:          Result := lvFormat.ShortDateFormat;
       sdDDMMYYYY:        Result := lvFormat.ShortDateFormat;
       sdDDMMMYY:         Result := lvFormat.LongDateFormat;
       sdDDMMMYYYY:       Result := lvFormat.LongDateFormat;
-      sdDDMMYYYY_HHMMSS: Result := lvFormat.ShortDateFormat + '_' + fnTimeFormat (lvFormat.LongTimeFormat);
-      sdDDMMYY_HHMMSS:   Result := lvFormat.ShortDateFormat + '_' + fnTimeFormat (lvFormat.LongTimeFormat);
-      sdDDMMYYYY_HHMM:   Result := lvFormat.ShortDateFormat + '_' + fnTimeFormat (lvFormat.ShortTimeFormat);
-      sdDDMMYY_HHMM:     Result := lvFormat.ShortDateFormat + '_' + fnTimeFormat (lvFormat.ShortTimeFormat);
+      sdDDMMYYYY_HHMMSS: Result := lvFormat.ShortDateFormat + ' ' + lvFormat.LongTimeFormat;
+      sdDDMMYY_HHMMSS:   Result := lvFormat.ShortDateFormat + ' ' + lvFormat.LongTimeFormat;
+      sdDDMMYYYY_HHMM:   Result := lvFormat.ShortDateFormat + ' ' + lvFormat.ShortTimeFormat;
+      sdDDMMYY_HHMM:     Result := lvFormat.ShortDateFormat + ' ' + lvFormat.ShortTimeFormat;
       //
       sdDD_SHORT_MTH_HHMM: begin
+                         lvTmp :=  lvFormat.ShortTimeFormat;
                          // using the Short Date Format dd/mm/yy or versions of m/d/y
-                         Result := lvFormat.ShortDateFormat + ' ' + fnTimeFormat (lvFormat.ShortTimeFormat);
-                         Result := StringReplace (Result, 'Y', '',  [rfIgnoreCase, rfReplaceAll]);   // Remove the Year
+                         Result := lvFormat.ShortDateFormat;
+                         Result := StringReplace (Result, 'Y', '',    [rfIgnoreCase, rfReplaceAll]);   // Remove the Year
                          // Remove the M, MM or MMM
                          Result := StringReplace (Result, 'M', '#',   [rfIgnoreCase]);                 // Remove the first Month with '#'
                          Result := StringReplace (Result, 'M', '',    [rfIgnoreCase, rfReplaceAll]);   // remove the rest if they exist
@@ -145,13 +145,15 @@ begin
                          Result := StringReplace (Result, '#', 'D',   [rfIgnoreCase]);                 // replace with D
                          //
                          Result := StringReplace (Result, lvFormat.DateSeparator, ' ', [rfReplaceAll]);
+                         Result := (Result + ' '+ lvTmp);
       end;
       // Month Only
       sdMM:              Result := 'MM';
       sdMMM:             Result := 'MMM';
       // Do Not Localize
-      sdYYYYMMDD_HHMM:   Result := cDATETIME_NON_NOT_LOCALISED;
-      sdYYYYMMDD_HHMMSS: Result := cDATETIME_NON_NOT_LOCALISED_SS;
+      sdYYYYMMDD_HHMM:      Result := cDATETIME_NON_NOT_LOCALISED;
+      sdYYYYMMDD_HHMMSS:    Result := cDATETIME_NON_NOT_LOCALISED_SS;
+      sdYYYYMMDD_HHMMSSZZZ: Result := cDATETIME_NON_NOT_LOCALISED_ALL
       else Raise Exception.CreateFmt ('Error: fnLocalisedDate. Unknown Type passed to Routine. (%s)', [GetEnumName (TypeInfo (tStringDates), Integer (aFormat))]);
     end;
     //
@@ -185,7 +187,7 @@ end;}
 // Routine: fnStrToDate
 // Author: M.A.Sargent  Date: 10/10/06  Version: V1.0
 //
-// Notes:
+// Notes: Thread Safe
 //   Format Decoded so far  YY = 05, YYYY = 2005 year, default Epoch gblEPOCH (50)
 //                          MM = 12, MMM  = Short Month
 //                          DD = 01
@@ -413,13 +415,13 @@ end;
 Function fnTS_DateTimeToNoneLocalizedFormat (Const aDateTime: tDateTime): String;
 begin
   // Do not Localize
-  Result := fnTS_FormatDateTime (sdYYYYMMDD_HHMMSS, aDateTime);
+  Result := fnTS_FormatDateTime (sdYYYYMMDD_HHMMSSZZZ, aDateTime);
 end;
 Function fnTS_NoneLocalizedFormatToDateTime (Const aDateTime: String): tDateTime;
 begin
   // Do not Localize
   if not IsEmpty (aDateTime) then
-       Result := fnStrToDate (aDateTime, fnLocalisedDate (sdYYYYMMDD_HHMMSS))
+       Result := fnStrToDate (aDateTime, fnLocalisedDate (sdYYYYMMDD_HHMMSSZZZ))
   else Result := 0;
 end;
 Function fnTS_NoneLocalizedFormatToDateTime2 (Const aDateTime: String): tOKDateRec;
@@ -428,7 +430,6 @@ begin
   Result.Date := fnTS_NoneLocalizedFormatToDateTime (aDateTime);
   Result.OK   := (Result.Date > 0);
 end;
-
 
 // Routine: fnTS_FormatTime and fnTS_FormatDateTime
 // Author: M.A.Sargent  Date: 20/09/13  Version: V1.0

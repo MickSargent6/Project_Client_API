@@ -550,7 +550,10 @@ Const
   cFLD_IO_INT_TIME                            = 'INTTIME';
   cFLD_IO_DAYS_SINCE                          = 'DaysSince';
   cFLD_IO_DISPLAYNAME                         = 'DspName';
-  cFLD_IO_ABSENCESTATUS                       =   'AbsenceStatus';
+  cFLD_IO_ABSENCESTATUS                       = 'AbsenceStatus';
+  //
+  cFLD_IO_DSP_STATUS                          = 'dspStatus';
+  cFLD_IO_DSP_ABSENCESTATUS                   = 'dspAbsenceStatus';
 
   cFLD_PAY_RATES_NAME                         = 'NAME';
   cFLD_PAY_RATES_EFFECTIVE_DATE               = 'EFFECTIVEDATE';
@@ -648,6 +651,9 @@ Const
   cI_COMPANY_NAME                             = 'I_COMPANY_NAME';
   cI_DEPNAME                                  = 'I_DEPNAME';
   cI_PAYROLL_SYSTEM                           = 'I_PAYROLL_SYSTEM';
+  //
+  cI_ID                                       = 'ID';
+
 
   // Moved from frmMain
   cCompany         = 'Company';
@@ -678,6 +684,9 @@ Const
   cSQL_DEL_RULE_ASSIGNMENT                     = 'DEL_RULE_ASSIGNMENT';
   cSQL_DEL_SHIFT_ASSIGNMENT                    = 'DEL_SHIFT_ASSIGNMENT';
   cSQL_DEL_WORKP_ASSIGNMENT                    = 'DEL_WORKP_ASSIGNMENT';
+  //
+  cSQL_DEL_PAY_PERIOD                          = 'DEL_PAY_PERIOD';
+  cSQL_DEL_PAY_PERIOD_ASSG                     = 'DEL_PAY_PERIOD_ASSG';
   //
   cSQL_QRY_EMP_ABSENCE_DATES                   = 'QRY_ABSENCE_DATES';
 

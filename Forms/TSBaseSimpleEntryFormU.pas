@@ -65,7 +65,7 @@ var
 
 implementation
 
-Uses MAS_DialogsU;
+Uses prettymessages;
 
 {$R *.dfm}
 
@@ -122,7 +122,7 @@ begin
   inherited;
   if fnDoCloseQuery then
     if fChanged then
-      CanClose := (MASDlgEx (cmsg_CONFIRM_LOSS_CHANGES, mtConfirmation, [mbYes, mbNo], mbNo) = mrYes);
+      CanClose := (fnSimpleMessage (cmsg_CONFIRM_LOSS_CHANGES, mtConfirmation, [mbYes, mbNo], mbNo) = mrYes);
 end;
 
 // Routine: fnDoCloseQuery
@@ -171,7 +171,7 @@ begin
       end;
     end;
     False: begin
-      if (lvMsg<>'') then MASDlg ('Error: %s', [lvMsg], mtError, [mbOK]);
+      if (lvMsg<>'') then fnSimpleMessage ('Error: %s', [lvMsg], mtError, [mbOK]);
     end;
   end;
 end;
