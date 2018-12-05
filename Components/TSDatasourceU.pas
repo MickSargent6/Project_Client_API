@@ -123,7 +123,7 @@ begin
   lvRes := FieldAsString2 (aName);
   Case lvRes.OK of
     True: Result := lvRes.Msg;
-    else if aRaiseNotFound then RaiseNow ('Error: FieldAsString. Field (%s) NOt Found', [aName]);
+    else if aRaiseNotFound then RaiseNow ('Error: FieldAsString. Field (%s) not Found', [aName]);
   end;
 end;
 Function tTSDatasource.FieldAsString2 (Const aName: String): tOKStrRec;
