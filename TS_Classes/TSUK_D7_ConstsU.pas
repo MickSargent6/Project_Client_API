@@ -60,6 +60,9 @@ Type
   tAbsenceType = (atNone, atEmpSick, atEmpHoliday, atEmpPaidLeave, atEmpUnPaidLeave, atGlobalStatutory,      
                    atGlobalOther, atGlobalHoliday, atGlobalPaidLeave, atGlobalUnPaidLeave);
 
+  //
+  tPayRollSystemsFormat = (psLoad, psfNameOnly, psfValuePair, psfMapList);
+
 Const
     cDEFAULT_IP_ADDRESS                     = '127.0.0.1';
     //

@@ -4,7 +4,7 @@ object Form13: TForm13
   BorderStyle = bsDialog
   Caption = 'Form13'
   ClientHeight = 526
-  ClientWidth = 927
+  ClientWidth = 926
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,7 +20,7 @@ object Form13: TForm13
   object Memo1: TMemo
     Left = 0
     Top = 337
-    Width = 927
+    Width = 926
     Height = 189
     Align = alClient
     ScrollBars = ssBoth
@@ -30,7 +30,7 @@ object Form13: TForm13
   object GroupBox1: TGroupBox
     Left = 0
     Top = 0
-    Width = 927
+    Width = 926
     Height = 337
     Align = alTop
     Caption = 'GroupBox1'
@@ -410,11 +410,11 @@ object Form13: TForm13
       Text = 'Edit1'
     end
     object Button21: TButton
-      Left = 600
-      Top = 136
+      Left = 688
+      Top = 60
       Width = 75
       Height = 25
-      Caption = 'Button21'
+      Caption = 'HD Serial Number'
       TabOrder = 32
     end
     object Button22: TButton
