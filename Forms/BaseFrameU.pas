@@ -204,11 +204,6 @@ end;
 
 { TFrame2 }
 
-// Routine: Create
-// Author: M.A.Sargent  Date: 04/06/08  Version: V1.0
-//
-// Notes: Set new Defaults
-//
 constructor TBaseFrame.Create (aOwner: tComponent);
 begin
   inherited Create (aOwner);
@@ -252,10 +247,6 @@ begin
   DoShow;
 end;
 
-// Routine: DoInitialShow
-// Author: M.A.Sargent  Date: 04/06/08  Version: V1.0
-//         M.A.Sargent        18/01/11           V2.0
-//
 // Notes: On the intial show the Open routine is called
 //  V2.0: Find the Parent Form and Send a Message to info the Form
 //        that a Fram ehas been Added
@@ -302,19 +293,12 @@ begin
   DoFrameAction (atPaint);
 end;
 
-// Routine: DoFrameAction
-// Author: M.A.Sargent  Date: 04/06/08  Version: V1.0
-//
-// Notes: Updated to Send Message to TreeView
-//
 Procedure TBaseFrame.DoFrameAction (Const aActionType: tActionType);
 begin
   if Assigned (fOnFrameAction) then fOnFrameAction (Self, aActionType);
 end;
 
-// Routine: DoFormClosing
-// Author: M.A.Sargent  Date: 18/01/11  Version: V1.0
-//
+
 // Notes: Parent tForm is About to Close, enables things (ieSaving) to be
 //        preformed before the Destructors start ge4tting called
 //
@@ -400,11 +384,6 @@ begin
   DoDelete (lvOK);
 end;
 
-// Routine: DoDelete
-// Author: M.A.Sargent  Date: 04/06/08  Version: V1.0
-//
-// Notes: Updated to Return aOK,
-//
 procedure TBaseFrame.DoDelete (var aOK: Boolean);
 begin
   if not fDoneOpen then Open;
@@ -419,22 +398,11 @@ procedure TBaseFrame.DoUpdate;
 begin
 end;
 
-// Routine: Msg_ParentFormClosing
-// Author: M.A.Sargent  Date: 18/01/11  Version: V1.0
-//
-// Notes: Message handler, Sent Sent to Form by tTfrmIPD in the FormClose
-//        event,
-//
 procedure TBaseFrame.Msg_ParentFormClosing (var Msg: TMessage);
 begin
   DoFormClosing;
 end;
 
-// Routine: SetUpdateKind
-// Author: M.A.Sargent  Date: 04/06/08  Version: V1.0
-//
-// Notes: Call IntDoDelete and not DoDelete
-//
 procedure TBaseFrame.SetUpdateKind (Const Value: tUpdateKind);
 begin
   fUpdateKind := Value;
@@ -460,11 +428,6 @@ begin
   aOK := True;
 end;
 
-// Routine: DoCancel
-// Author: M.A.Sargent  Date: 05/01/15  Version: V1.0
-//
-// Notes: Updated to be a Function, True if Cancelled else False
-//
 Function TBaseFrame.DoCancel: Boolean;
 begin
   fIsCancelling := True;
@@ -491,11 +454,6 @@ begin
     Release;
 end;
 
-// Routine:
-// Author: M.A.Sargent  Date: 04/06/08  Version: V1.0
-//
-// Notes:
-//
 procedure TBaseFrame.VisibleChanging;
 begin
   Case Visible of
@@ -505,11 +463,6 @@ begin
   inherited;
 end;
 
-// Routine: CloseFrameQuery
-// Author: M.A.Sargent  Date: /0/07  Version: V1.0
-//
-// Notes:
-//
 Function TBaseFrame.CloseFrameQuery: Boolean;
 var
   lvMsg: String;
@@ -551,9 +504,6 @@ procedure TBaseFrame.DoReadOnly;
 begin
 end;
 
-// Routine: AfterConstruction
-// Author: M.A.Sargent  Date: 08/02/12  Version: V1.0
-//
 // Notes:
 //  V1.0: Updated to set Align to alNone is AutoAlign is Assigned
 //
@@ -578,23 +528,11 @@ procedure TBaseFrame.DoClear;
 begin
 end;
 
-// Routine: ReFresh
-// Author: M.A.Sargent  Date: 04/07/11  Version: V1.0
-//         M.A.Sargent        19/01/15           V2.0
-//
-// Notes:
-//  V2.0:
-//
 procedure TBaseFrame.ReFresh;
 begin
   Open;
 end;
 
-// Routine: SetDoneSetUp
-// Author: M.A.Sargent  Date: 13/11/12  Version: V1.0
-//
-// Notes:
-//
 Procedure TBaseFrame.SetDoneSetUp (Const Value: Boolean);
 var
   lvOK: Boolean;
@@ -614,11 +552,6 @@ begin
   DoHideEvent;
 end;
 
-// Routine: AddMsg & DoAddMsg
-// Author: M.A.Sargent  Date: 18/10/18  Version: V1.0
-//
-// Notes:
-//
 Procedure TBaseFrame.AddMsg (Const aMsg: String);
 begin
   DoAddMsg (aMsg);

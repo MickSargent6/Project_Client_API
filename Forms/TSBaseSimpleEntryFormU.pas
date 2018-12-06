@@ -109,14 +109,6 @@ procedure TformTSBaseSimpleEntryForm.DoCancel (var aCancel: Boolean);
 begin
 end;
 
-// Routine: FormCloseQuery
-// Author: M.A.Sargent  Date: 20/12/11  Version: V1.0
-//         M.A.Sargent        08/08/16           V2.0
-//
-// Notes: Add Virtual function, default to True, allows SubClass to not Prompt
-//        for CanClose assignment
-//  V2.0: Updated to add a No as the default
-//
 procedure TformTSBaseSimpleEntryForm.FormCloseQuery (Sender: TObject; var CanClose: Boolean);
 begin
   inherited;
@@ -125,20 +117,10 @@ begin
       CanClose := (fnSimpleMessage (cmsg_CONFIRM_LOSS_CHANGES, mtConfirmation, [mbYes, mbNo], mbNo) = mrYes);
 end;
 
-// Routine: fnDoCloseQuery
-// Author: M.A.Sargent  Date: 20/12/11  Version: V1.0
-//
-// Notes: Defaults to True
-//
 Function TformTSBaseSimpleEntryForm.fnDoCloseQuery: Boolean;
 begin
   Result := True;
 end;
-
-{Function TformTSBaseSimpleEntryForm.fnHasChanged: Boolean;
-begin
-  Result := fChanged;
-end;}
 
 procedure TformTSBaseSimpleEntryForm.InitialShow;
 begin
@@ -191,29 +173,14 @@ begin
   fnChanged := True;
 end;
 
-// Routine: DoChanged
-// Author: M.A.Sargent  Date: 16/07/11  Version: V1.0
-//
-// Notes:
-//
 procedure TformTSBaseSimpleEntryForm.DoChanged (const Value: Boolean);
 begin
 end;
 
-// Routine: DoValidate
-// Author: M.A.Sargent  Date: 26/01/12  Version: V1.0
-//
-// Notes:
-//
 procedure TformTSBaseSimpleEntryForm.DoValidate (var aOK: Boolean; var aMsg: String);
 begin
 end;
 
-// Routine: DoClear
-// Author: M.A.Sargent  Date: 05/12/12  Version: V1.0
-//
-// Notes:
-//
 procedure TformTSBaseSimpleEntryForm.DoClear;
 begin
 end;
@@ -230,11 +197,6 @@ begin
   IntDoCancel;
 end;
 
-// Routine: fnIsInsert
-// Author: M.A.Sargent  Date: 05/12/12  Version: V1.0
-//
-// Notes:
-//
 Function TFormTSBaseSimpleEntryForm.fnIsInsert: Boolean;
 begin
   Result := (fUpdateKind = ukInsert);
