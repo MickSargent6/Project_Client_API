@@ -27,35 +27,43 @@ Uses Classes, Windows, MASRecordStructuresU, SysUtils, Forms, TSUK_D7_ConstsU, D
   Function fnActivationClient_Activate   (var aActivationResult: tActivationResult): tOKStrRec; overload;
   Function fnActivationClient_GetLicense: tOKStrRec;
   //
-  Function fnActivationClient_Active          (var aActive:     Boolean): tOKStrRec;
-  Function fnActivationClient_Expiry          (var aEnabled:    Boolean; var aDate: tDateTime): tOKStrRec;
-  Function fnActivationClient_Employees       (var aEmployees:  Integer): tOKStrRec;
-  Function fnActivationClient_TotalUser       (var aTotalUsers: Integer): tOKStrRec;
-  Function fnActivationClient_Region          (var aRegion:     tTimeSystemsRegions): tOKStrRec;
-  Function fnActivationClient_Product         (var aProductName, aProductVersion: String): tOKStrRec;
-  Function fnActivationClient_LicenseOptions  (var aLicensOptions:   tLicenseOptions): tOKStrRec;
-  Function fnActivationClient_AllowActivation (var aAllowActivation: Boolean): tOKStrRec;
+  Function fnActivationClient_Active           (var aActive:     Boolean): tOKStrRec;
+  Function fnActivationClient_Expiry           (var aEnabled:    Boolean; var aDate: tDateTime): tOKStrRec;
+  Function fnActivationClient_Employees        (var aEmployees:  Integer): tOKStrRec;
+  Function fnActivationClient_TotalUser        (var aTotalUsers: Integer): tOKStrRec;
+  Function fnActivationClient_Region           (var aRegion:     tTimeSystemsRegions): tOKStrRec;
+  Function fnActivationClient_Product          (var aProductName, aProductVersion: String): tOKStrRec;
+  Function fnActivationClient_LicenseOptions   (var aLicensOptions:   tLicenseOptions): tOKStrRec;
+  Function fnActivationClient_AllowActivation  (var aAllowActivation: Boolean): tOKStrRec;
+  Function fnActivationClient_FingerPrint      (var aFingerPrint: String): tOKStrRec;
+  Function fnActivationClient_SageAccount      (var aSageAccountNumber: String): tOKStrRec;
+  Function fnActivationClient_SalesNumber      (var aSalesNumber: String): tOKStrRec;
   //
-  Function fnActivationClient_GetNamedValue   (Const aName: string; var aValue: tOKStrRec): tOKStrRec;
-
+  Function fnActivationClient_GetNamedValue    (Const aName: string; var aValue: tOKStrRec): tOKStrRec;
   //
   Function fnActivationClient_Ping: tOKStrRec;
+  Function fnActivationClient_SetAccountInfo   (Const aSage, aSalesNo: String; Const aSageUserName: Boolean; var aActivationFileStatus: tActivationFileStatus): tOKStrRec;
+  Function fnActivationClient_ServerParamCount (Const aList: tStrings): tOKStrRec;
+
   Function fnActivationClient_CloseDown: tOKStrRec;
   //
 
 Type
-  tDLL_D7_Setup           = Function (Const aId: Integer; Const aParams: pAnsiChar; var aActivationFileStatus: tActivationFileStatus): tOKIntegerRec; safecall;
-  tDLL_D7_GetFeedBack     = Function (MessageOut: pAnsiChar): Boolean; safecall;
+  tDLL_D7_Setup             = Function (Const aId: Integer; Const aParams: pAnsiChar; var aActivationFileStatus: tActivationFileStatus): tOKIntegerRec; safecall;
+  tDLL_D7_GetFeedBack       = Function (MessageOut: pAnsiChar): Boolean; safecall;
   //
-  tDLL_D7_CheckActivation = Function (var aCheckLicense: tCheckLicense): tOKIntegerRec; safecall;
-  tDLL_D7_Activate        = Function (var aActivationResult: tActivationResult): tOKIntegerRec; safecall;
-  tDLL_D7_GetLicense      = Function: tOKIntegerRec; safecall;
+  tDLL_D7_CheckActivation   = Function (var aCheckLicense: tCheckLicense): tOKIntegerRec; safecall;
+  tDLL_D7_Activate          = Function (var aActivationResult: tActivationResult): tOKIntegerRec; safecall;
+  tDLL_D7_GetLicense        = Function: tOKIntegerRec; safecall;
   //
-  tDLL_D7_GetValue        = Function (Const aActivationValue: tActivationValue): tOKIntegerRec; safecall;
-  tDLL_D7_GetNamedValue   = Function (Const aName: pAnsiChar; var aFound: Boolean): tOKIntegerRec; safecall;
+  tDLL_D7_GetValue          = Function (Const aActivationValue: tActivationValue): tOKIntegerRec; safecall;
+  tDLL_D7_GetNamedValue     = Function (Const aName: pAnsiChar; var aFound: Boolean): tOKIntegerRec; safecall;
 
-  tDLL_D7_Ping            = Function: tOKIntegerRec; safecall;
-  tDLL_D7_CloseDown       = Function: tOKIntegerRec; safecall;
+  tDLL_D7_Ping              = Function: tOKIntegerRec; safecall;
+  tDLL_D7_SetAccountInfo    = Function (Const aSage, SalesNo: pAnsiChar; Const aSageUserName: Boolean; var aActivationFileStatus: tActivationFileStatus): tOKIntegerRec; safecall;
+  tDLL_D7_ServerParamsCount = Function : tOKIntegerRec; safecall;
+
+  tDLL_D7_CloseDown         = Function: tOKIntegerRec; safecall;
 
 implementation
 
@@ -426,6 +434,42 @@ begin
   if Result.OK then aAllowActivation := (lvValue = '1');
 end;
 
+// Routine: fnActivationClient_FingerPrint
+// Author: M.A.Sargent  Date: 17/12/18  Version: V1.0
+//
+// Notes:
+//
+Function fnActivationClient_FingerPrint (var aFingerPrint: String): tOKStrRec;
+var
+  lvValue: String;
+begin
+  lvValue := '';
+  Result := fnActivationClient_GetValue (avFingerPrint, lvValue);
+  if Result.OK then aFingerPrint := lvValue;
+end;
+
+// Routine: fnActivationClient_SageAccount & fnActivationClient_SalesNumber
+// Author: M.A.Sargent  Date: 17/12/18  Version: V1.0
+//
+// Notes:
+//
+Function fnActivationClient_SageAccount (var aSageAccountNumber: String): tOKStrRec;
+var
+  lvValue: String;
+begin
+  lvValue := '';
+  Result := fnActivationClient_GetValue (avSageNumber, lvValue);
+  if Result.OK then aSageAccountNumber := lvValue;
+end;
+Function fnActivationClient_SalesNumber (var aSalesNumber: String): tOKStrRec;
+var
+  lvValue: String;
+begin
+  lvValue := '';
+  Result := fnActivationClient_GetValue (avSalesNumber, lvValue);
+  if Result.OK then aSalesNumber := lvValue;
+end;
+
 // Routine: fnActivationClient_General
 // Author: M.A.Sargent  Date: 14/05/18  Version: V1.0
 //
@@ -461,7 +505,6 @@ begin
   end;
 end;
 
-
 // Routine: fnPing
 // Author: M.A.Sargent  Date: 13/05/18  Version: V1.0
 //
@@ -485,6 +528,67 @@ begin
   except
     on e:Exception do
       Result := fnResult ('Error: fnActivationClient_Ping. %s', [e.Message]);
+  end;
+end;
+
+// Routine: fnActivationClient_SetAccountInfo
+// Author: M.A.Sargent  Date: 12/12/18  Version: V1.0
+//
+// Notes:
+//
+Function fnActivationClient_SetAccountInfo (Const aSage, aSalesNo: String; Const aSageUserName: Boolean; var aActivationFileStatus: tActivationFileStatus): tOKStrRec;
+var
+  lvRec:            tOKIntegerRec;
+  lvSetAccountInfo: tDLL_D7_SetAccountInfo;
+  lvSage:           AnsiString;
+  lvSalesNo:        AnsiString;
+begin
+  Result := fnClear_OKStrRec;
+  Try
+    lvSetAccountInfo := tDLL_D7_SetAccountInfo (gblDLLList.GetDLLAddress (cDLL_D7_ACTIVATION, cDLL_D7_SETACCOUNTINFO));
+    lvSage    := aSage;
+    lvSalesNo := aSalesNo;
+    lvRec := lvSetAccountInfo (pAnsiChar (lvSage), pAnsiChar (lvSalesNo), aSageUserName, aActivationFileStatus);
+    Result.OK := lvRec.OK;
+    Case Result.OK of
+      True:;
+      else Result := IntGetFeedBack (lvRec);
+    end;
+  except
+    on e:Exception do
+      Result := fnResult ('Error: fnActivationClient_SetAccountInfo. %s', [e.Message]);
+  end;
+end;
+
+// Routine: fnActivationClient_ServerParamCount
+// Author: M.A.Sargent  Date: 14/12/18  Version: V1.0
+//
+// Notes:
+//
+Function fnActivationClient_ServerParamCount (Const aList: tStrings): tOKStrRec;
+var
+  lvRec:               tOKIntegerRec;
+  lvServerParamsCount: tDLL_D7_ServerParamsCount;
+begin
+  Result := fnClear_OKStrRec;
+  Try
+    fnRaiseOnFalse (Assigned (aList), 'Error: fnActivationClient_ServerParamCount. aList Must be Assigned');
+    //
+    lvServerParamsCount := tDLL_D7_ServerParamsCount (gblDLLList.GetDLLAddress (cDLL_D7_ACTIVATION, cDLL_D7_SERVERPARAMCOUNT));
+
+    lvRec := lvServerParamsCount;
+    Result.OK := lvRec.OK;
+    Case Result.OK of
+      True: begin
+        Result := IntGetFeedBack (lvRec);
+        fnRaiseOnFalse (Result);
+        aList.Text := Trim (Result.Msg);
+      end;
+      else Result := IntGetFeedBack (lvRec);
+    end;
+  except
+    on e:Exception do
+      Result := fnResult ('Error: fnActivationClient_ServerParamsCount. %s', [e.Message]);
   end;
 end;
 

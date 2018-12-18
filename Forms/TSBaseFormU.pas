@@ -87,6 +87,9 @@ Uses Math, MASCommonU, MAS_IniU, DynamicPropertiesU, ListPropertyAndLoadU, Forma
 
 {$R *.dfm}
 
+// Routine: fnShowModalForm
+// Author: M.A.Sargent  Date: 01/06/05  Version: V1.0
+//
 // Notes: Used when showinf a Modal form, there can be at least 4 results.
 //        OK, Cancel, Error  Exception
 //        1. Set externed attributes form Error and Exception and these will always result False
@@ -146,10 +149,18 @@ begin
   GetRegInfoForm;
 end;
 
+// Routine: FormClose
+// Author: M.A.Sargent  Date: 18/01/11  Version: V1.0
+//
+// Notes:
+//
 procedure TTSBaseForm.FormClose (Sender: TObject; var Action: TCloseAction);
 begin
 end;
 
+// Routine: FormCanResize
+// Author: M.A.Sargent  Date: 01/06/05  Version: V1.0
+//
 // Notes: Event assigned to enabled the user to resize the form/maximize it but
 //        form can not be made smaller than the design time size
 //
@@ -161,6 +172,11 @@ begin
     Resize := (NewWidth >= fDFMDetails.Width) and (NewHeight >= fDFMDetails.Height);
 end;
 
+// Routine: SetupParams
+// Author: M.A.Sargent  Date: 02/10/18  Version: V1.0
+//
+// Notes:
+//
 Procedure TTSBaseForm.SetupParams (Const aParams: tJSonString2);
 var
   lvList: tMASStringList;
@@ -182,6 +198,11 @@ Procedure TTSBaseForm.DoGetResult (var aResult: tOKStrRec);
 begin
 end;
 
+// Routine: FormCanResize
+// Author: M.A.Sargent  Date: 29/09/17  Version: V1.0
+//
+// Notes:
+//
 Procedure TTSBaseForm.GetRegInfoForm;
 var
   lvObj: tMASIni;
@@ -243,6 +264,28 @@ begin
   Result := (Application.MainForm = Self);
 end;
 
+// Routine: AddMsg
+// Author: M.A.Sargent  Date: 29/09/17  Version: V1.0
+//
+// Notes:
+//
+{PProcedure TTSBaseForm.AddMsg (Const aLevel: tTSVerboseLevel; Const aFormatStr: String; Const Args: array of const);
+begin
+  AddMsg (aLevel, Format (aFormatStr, Args));
+end;
+Procedure TTSBaseForm.AddMsg (Const aMsg: String);
+begin
+  AddMsg (vlNormal, aMsg);
+end;
+Procedure TTSBaseForm.AddMsg (Const aLevel: tTSVerboseLevel; const aMsg: String);
+begin
+  AM_LogMsg (aLevel, aMsg);
+end;
+Procedure TTSBaseForm.AddException (Const aLocationName: String; Const aExcp: Exception);
+begin
+  AM_AddException (aLocationName, aExcp);
+end;}
+
 Procedure TTSBaseForm.DoOpen;
 begin
 end;
@@ -251,6 +294,11 @@ Procedure TTSBaseForm.DoAfterShow;
 begin
 end;
 
+// Routine: DoSetupParams
+// Author: M.A.Sargent  Date: 29/09/17  Version: V1.0
+//
+// Notes:
+//
 Procedure TTSBaseForm.DoSetupParams (Const aParams: tJSonString2);
 begin
 end;

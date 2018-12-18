@@ -56,6 +56,11 @@ begin
   end;
 end;
 
+// Routine: DoChanged
+// Author: M.A.Sargent  Date: 16/07/11  Version: V1.0
+//
+// Notes:
+//
 Procedure TTSBaseFrame.DoChanged  (Const Value: Boolean);
 begin
 end;

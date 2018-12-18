@@ -44,7 +44,7 @@ Type
   tActivationResult = (arOK, arNotFound, arNotActive, arNoLicenseFree, arBlackListed, arFailed, arParamsMixNotFound, arAlreadyActivated, arCustomerNotActive, arActivateDisabled);
   tDbResult         = (drOK, drNoRowUpdated, drTooManyRows);
   tActivationValue = (avActive, avExpiryEnabled, avExpiryDate, avEmployees, avTotalUsers, avRegion,
-                       avProductName, avProductVersion, avLicenseOptions, avAllowActivation);
+                       avProductName, avProductVersion, avLicenseOptions, avAllowActivation, avFingerPrint, avSageNumber, avSalesNumber);
 
   tTypeMsg = (tmInformation, tmWarning, tmError, tmException, tmCritical, tmHeartBeat, tmAdmin, tmVerbose);
   

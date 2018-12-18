@@ -23,6 +23,11 @@ implementation
 
 Uses MASCommonU;
 
+// Routine: fnPleaseWait_Start & fnPleaseWait_Progress
+// Author: M.A.Sargent  Date: 05/11/18  Version: V1.0
+//
+// Notes:
+//
 Function fnPleaseWait_Start (Const aInt: Integer; Const aMsg: String): Boolean;
 var
   lvHandle: tHandle;
@@ -40,6 +45,11 @@ begin
   Application.ProcessMessages;
 end;
 
+// Routine: fnPleaseWait_Start2 & fnPleaseWait_Progress2
+// Author: M.A.Sargent  Date: 05/11/18  Version: V1.0
+//
+// Notes:
+//
 Function fnPleaseWait_Start2 (Const aInt, aTotalParts: Integer; Const aMsg: String): Boolean;
 var
   lvHandle: tHandle;
@@ -58,6 +68,11 @@ begin
   Application.ProcessMessages;
 end;
 
+// Routine: fnPleaseWait_Info & fnPleaseWait_End
+// Author: M.A.Sargent  Date: 05/11/18  Version: V1.0
+//
+// Notes:
+//
 Function fnPleaseWait_Info (Const aMsg: String): Boolean;
 var
   lvHandle: tHandle;
