@@ -67,3 +67,4 @@ __recovery/
 
 # Mick VSS Files
 *.SCC
+*.dof

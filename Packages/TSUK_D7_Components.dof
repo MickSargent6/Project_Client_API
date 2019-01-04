@@ -134,8 +134,6 @@ OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
 Comments=
-[Excluded Packages]
-S:\DRIVE_M\vms_share\Project Client API\Bin\TSUK_D7_Components.bpl=(untitled)
 [HistoryLists\hlConditionals]
 Count=1
 Item0=2019A
@@ -143,11 +141,13 @@ Item0=2019A
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlSearchPath]
-Count=4
-Item0=$(DELPHI)\Lib\Debug;c:\delphi\c;c:\raize\rc2\lib4;$(DELPHI)\thrdparty\cooltray;T:\DlphiSrc\DX;$(DELPHI)\lib;$(DELPHI)\Source\Samples;c:\program files\abc5\Delphi4;c:\program files\Woll2Woll\IP4D4\Lib;$(DELPHI)\thrdparty;T:\DlphiSrc\d7extra\QuickReport3\quickrpt;T:\DlphiSrc\d7extra\Rx Library\units;C:\Program Files\Borland\Delphi7\Quickrep5;S:\DRIVE_M\vms_share\Shared;S:\DRIVE_M\vms_share\Project_Client_API\Classes;S:\DRIVE_M\vms_share\Project_Client_API\BasesClasses;S:\DRIVE_M\vms_share\Project_Client_API\Classes\ThreadSafeClasses;S:\DRIVE_M\vms_share\Project_Client_API\TS_Classes;S:\DRIVE_M\vms_share\Project_Client_API\Forms;S:\DRIVE_M\vms_share\common;S:\DRIVE_M\vms_share\Project_Client_API\CommonCode\TableAPI;S:\DRIVE_M\vms_share\Project_Client_API\Components;S:\DRIVE_M\vms_share\Project_Client_API
-Item1=c:\delphi\c;c:\raize\rc2\lib4;$(DELPHI)\thrdparty\cooltray;T:\DlphiSrc\DX;$(DELPHI)\lib;$(DELPHI)\Source\Samples;c:\program files\abc5\Delphi4;c:\program files\Woll2Woll\IP4D4\Lib;T:\DlphiSrc\thrdparty;T:\DlphiSrc\d7extra\QuickReport3\quickrpt;T:\DlphiSrc\d7extra\Rx Library\units;S:\DRIVE_M\vms_share\Project Client API\Classes;S:\DRIVE_M\vms_share\Project Client API\BasesClasses;S:\DRIVE_M\vms_share\Project Client API\Classes\ThreadSafeClasses;S:\DRIVE_M\vms_share\Project Client API\TS_Classes;S:\DRIVE_M\vms_share\Project Client API;S:\DRIVE_M\vms_share\Project Client API\Forms;S:\DRIVE_M\vms_share\common
-Item2=c:\delphi\c;c:\raize\rc2\lib4;$(DELPHI)\thrdparty\cooltray;T:\DlphiSrc\DX;$(DELPHI)\lib;$(DELPHI)\Source\Samples;c:\program files\abc5\Delphi4;c:\program files\Woll2Woll\IP4D4\Lib;T:\DlphiSrc\thrdparty;T:\DlphiSrc\d7extra\QuickReport3\quickrpt;T:\DlphiSrc\d7extra\Rx Library\units;S:\DRIVE_M\vms_share\Project Client API\Classes;S:\DRIVE_M\vms_share\Project Client API\BasesClasses;S:\DRIVE_M\vms_share\Project Client API\Classes\ThreadSafeClasses;S:\DRIVE_M\vms_share\Project Client API\TS_Classes;S:\DRIVE_M\vms_share\Project Client API;S:\DRIVE_M\vms_share\Project Client API\Forms
-Item3=c:\delphi\c;c:\raize\rc2\lib4;$(DELPHI)\thrdparty\cooltray;T:\DlphiSrc\DX;$(DELPHI)\lib;$(DELPHI)\Source\Samples;c:\program files\abc5\Delphi4;c:\program files\Woll2Woll\IP4D4\Lib;T:\DlphiSrc\thrdparty;T:\DlphiSrc\d7extra\QuickReport3\quickrpt;T:\DlphiSrc\d7extra\Rx Library\units
+Count=5
+Item0=C:\Program Files\Borland\d7extra\atpack\source;T:\DlphiSrc\d7extra\Rx Library;S:\DRIVE_M\vms_share\Shared\;S:\DRIVE_M\vms_share\Ts3\;S:\DRIVE_M\vms_share\projects\TSTDSrv;E:\tmssoftware\TMS Component Pack;S:\DRIVE_M\vms_share\Project_Client_API;S:\DRIVE_M\vms_share\Project_Client_API\Classes;S:\DRIVE_M\vms_share\Project_Client_API\BasesClasses;S:\DRIVE_M\vms_share\Project_Client_API\Classes\ThreadSafeClasses;S:\DRIVE_M\vms_share\Project_Client_API\Components;S:\DRIVE_M\vms_share\Project_Client_API\TS_Classes
+Item1=$(DELPHI)\Lib\Debug;c:\delphi\c;c:\raize\rc2\lib4;$(DELPHI)\thrdparty\cooltray;T:\DlphiSrc\DX;$(DELPHI)\lib;$(DELPHI)\Source\Samples;c:\program files\abc5\Delphi4;c:\program files\Woll2Woll\IP4D4\Lib;$(DELPHI)\thrdparty;T:\DlphiSrc\d7extra\QuickReport3\quickrpt;T:\DlphiSrc\d7extra\Rx Library\units;C:\Program Files\Borland\Delphi7\Quickrep5;S:\DRIVE_M\vms_share\Shared;S:\DRIVE_M\vms_share\Project_Client_API\Classes;S:\DRIVE_M\vms_share\Project_Client_API\BasesClasses;S:\DRIVE_M\vms_share\Project_Client_API\Classes\ThreadSafeClasses;S:\DRIVE_M\vms_share\Project_Client_API\TS_Classes;S:\DRIVE_M\vms_share\Project_Client_API\Forms;S:\DRIVE_M\vms_share\common;S:\DRIVE_M\vms_share\Project_Client_API\CommonCode\TableAPI;S:\DRIVE_M\vms_share\Project_Client_API\Components;S:\DRIVE_M\vms_share\Project_Client_API
+Item2=c:\delphi\c;c:\raize\rc2\lib4;$(DELPHI)\thrdparty\cooltray;T:\DlphiSrc\DX;$(DELPHI)\lib;$(DELPHI)\Source\Samples;c:\program files\abc5\Delphi4;c:\program files\Woll2Woll\IP4D4\Lib;T:\DlphiSrc\thrdparty;T:\DlphiSrc\d7extra\QuickReport3\quickrpt;T:\DlphiSrc\d7extra\Rx Library\units;S:\DRIVE_M\vms_share\Project Client API\Classes;S:\DRIVE_M\vms_share\Project Client API\BasesClasses;S:\DRIVE_M\vms_share\Project Client API\Classes\ThreadSafeClasses;S:\DRIVE_M\vms_share\Project Client API\TS_Classes;S:\DRIVE_M\vms_share\Project Client API;S:\DRIVE_M\vms_share\Project Client API\Forms;S:\DRIVE_M\vms_share\common
+Item3=c:\delphi\c;c:\raize\rc2\lib4;$(DELPHI)\thrdparty\cooltray;T:\DlphiSrc\DX;$(DELPHI)\lib;$(DELPHI)\Source\Samples;c:\program files\abc5\Delphi4;c:\program files\Woll2Woll\IP4D4\Lib;T:\DlphiSrc\thrdparty;T:\DlphiSrc\d7extra\QuickReport3\quickrpt;T:\DlphiSrc\d7extra\Rx Library\units;S:\DRIVE_M\vms_share\Project Client API\Classes;S:\DRIVE_M\vms_share\Project Client API\BasesClasses;S:\DRIVE_M\vms_share\Project Client API\Classes\ThreadSafeClasses;S:\DRIVE_M\vms_share\Project Client API\TS_Classes;S:\DRIVE_M\vms_share\Project Client API;S:\DRIVE_M\vms_share\Project Client API\Forms
+Item4=c:\delphi\c;c:\raize\rc2\lib4;$(DELPHI)\thrdparty\cooltray;T:\DlphiSrc\DX;$(DELPHI)\lib;$(DELPHI)\Source\Samples;c:\program files\abc5\Delphi4;c:\program files\Woll2Woll\IP4D4\Lib;T:\DlphiSrc\thrdparty;T:\DlphiSrc\d7extra\QuickReport3\quickrpt;T:\DlphiSrc\d7extra\Rx Library\units
 [HistoryLists\hlUnitOutputDirectory]
-Count=1
-Item0=S:\DRIVE_M\vms_share\dcu
+Count=2
+Item0=S:\DRIVE_M\vms_share\Project_Client_API\Dcu
+Item1=S:\DRIVE_M\vms_share\dcu
