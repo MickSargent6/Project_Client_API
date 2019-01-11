@@ -1,6 +1,6 @@
 object TSBaseForm: TTSBaseForm
-  Left = 871
-  Top = 303
+  Left = 886
+  Top = 379
   Width = 554
   Height = 302
   Caption = 'TSBaseForm'

@@ -13,7 +13,7 @@ uses
   SysUtils, Classes, ABSMain;
 
 type
-  tTSABSDatabase = class(TABSDatabase)
+  TTSABSDatabase = class(TABSDatabase)
   protected
     { Protected declarations }
     Procedure ReadState(Reader: TReader); override;
@@ -23,13 +23,13 @@ type
 implementation
 
 
-Procedure tTSABSDatabase.ReadState (Reader: TReader);
+procedure TTSABSDatabase.ReadState (Reader: TReader);
 begin
   inherited;
   Connected := False;
 end;
 
-Procedure tTSABSDatabase.WriteState (Writer: TWriter);
+procedure TTSABSDatabase.WriteState (Writer: TWriter);
 begin
   inherited;
   Connected := False;

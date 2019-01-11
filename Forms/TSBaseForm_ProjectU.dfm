@@ -1,6 +1,6 @@
 inherited TSBaseForm_Project: TTSBaseForm_Project
-  Left = 1336
-  Top = 622
+  Left = 1359
+  Top = 738
   Caption = 'TSBaseForm_Project'
   OldCreateOrder = True
   PixelsPerInch = 96
