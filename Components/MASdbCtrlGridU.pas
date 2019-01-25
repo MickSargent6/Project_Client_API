@@ -1,7 +1,3 @@
-//
-// Unit: MASdbCtrlGridU
-// Author: M.A.Sargent  Date: 29/10/2018  Version: V1.0
-//
 unit MASdbCtrlGridU;
 
 interface
@@ -10,29 +6,21 @@ uses
   SysUtils, Classes, Controls, dbcgrids, Windows, Messages;
 
 type
-  tMASdbCtrlGrid = class(TDBCtrlGrid)
+  TMASdbCtrlGrid = class(TDBCtrlGrid)
   private
-    { Private declarations }
     fShowScrollBars: Boolean;
-    //
-    Procedure SetShowScrollBars (Const Value: Boolean);
-    Procedure Int_ScrollBars;
-    //
-    Procedure WMNCCalcSize  (Var msg: TMessage); message WM_NCCALCSIZE;
-  protected
-    { Protected declarations }
-  public
-    { Public declarations }
+    procedure SetShowScrollBars (Const Value: Boolean);
+    procedure Int_ScrollBars;
+    procedure WMNCCalcSize  (Var msg: TMessage); message WM_NCCALCSIZE;
   published
-    { Published declarations }
-    Property ShowScrollBars: Boolean read fShowScrollBars write SetShowScrollBars;
+    property ShowScrollBars: Boolean read fShowScrollBars write SetShowScrollBars;
   end;
 
 implementation
 
-{ tMASdbCtrlGrid }
+{ TMASdbCtrlGrid }
 
-Procedure tMASdbCtrlGrid.Int_ScrollBars;
+Procedure TMASdbCtrlGrid.Int_ScrollBars;
 const
   scrollstyles = WS_VSCROLL or WS_HSCROLL;
 var
@@ -46,12 +34,12 @@ begin
   end;
 end;
 
-Procedure tMASdbCtrlGrid.SetShowScrollBars (Const Value: Boolean);
+Procedure TMASdbCtrlGrid.SetShowScrollBars (Const Value: Boolean);
 begin
   fShowScrollBars := Value;
 end;
 
-Procedure tMASdbCtrlGrid.WMNCCalcSize(var msg: TMessage);
+Procedure TMASdbCtrlGrid.WMNCCalcSize(var msg: TMessage);
 begin
   Int_ScrollBars;
   inherited;
