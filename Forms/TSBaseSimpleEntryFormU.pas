@@ -65,7 +65,7 @@ var
 
 implementation
 
-Uses prettymessages;
+Uses prettymessages, alto_theming;
 
 {$R *.dfm}
 
@@ -78,6 +78,7 @@ end;
 procedure TformTSBaseSimpleEntryForm.FormCreate(Sender: TObject);
 begin
   inherited;
+  ThemeGlowbuttons(Self);
   fUpdateKind   := ukInsert;
   fIsClearing   := False;
   fChanged      := False;

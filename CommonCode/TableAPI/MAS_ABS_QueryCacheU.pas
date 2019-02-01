@@ -18,9 +18,9 @@ uses Classes, SysUtils, MASStringListU, MASRecordStructuresU, Db, MAS_QueryCache
 
 Type
 
-  tAbsSQLCache = Class (tSQLCache)
+  TAbsSQLCache = Class (TSQLCache)
   Private
-    Function  fnCast          (Const aDataSet: tDataSet): tTSAbsQuery;
+    Function  fnCast          (Const aDataSet: tDataSet): TTSAbsQuery;
   Protected
     Function  fnDoContainsSQL (Const aDataSet: tDataSet): Boolean; override;
     Function  fnDoGetQuery    (Const DbConnection: tObject): tDataSet; override;
@@ -32,13 +32,13 @@ Type
   Public
     Constructor CreateWithDb  (Const aDb: tABSDatabase; Const aPrepareOnCreate: Boolean = False); virtual;
     //
-    Function fnSetup          (Const aName: String; Const aSQL: String; Const aCacheOption: tCacheOption = coDefault): tTSAbsQuery; overload;
-    Function fnSetup          (Const aName: String; Const aSQL: tStrings; Const aCacheOption: tCacheOption = coDefault): tTSAbsQuery; overload;
+    Function fnSetup          (Const aName: String; Const aSQL: String; Const aCacheOption: tCacheOption = coDefault): TTSAbsQuery; overload;
+    Function fnSetup          (Const aName: String; Const aSQL: tStrings; Const aCacheOption: tCacheOption = coDefault): TTSAbsQuery; overload;
     //
-    Function fnRunQuery       (Const aName: String; Const DisableCtrls: Boolean = True): tTSAbsQuery; overload;
-    Function fnRunQuery       (Const aName: String; Const aParam: String; Const aValue: Variant; Const DisableCtrls: Boolean = True): tTSAbsQuery; overload;
-    Function fnRunQuery       (Const aName: String; Const aParams: array of string; Const aValues: array of Variant; Const DisableCtrls: Boolean = True): tTSAbsQuery; overload;
-    Function fnRunQuery2      (Const aName, aSQL: String; Const aParams: array of string; Const aValues: array of Variant; Const DisableCtrls: Boolean = True): tTSAbsQuery; overload;
+    Function fnRunQuery       (Const aName: String; Const DisableCtrls: Boolean = True): TTSAbsQuery; overload;
+    Function fnRunQuery       (Const aName: String; Const aParam: String; Const aValue: Variant; Const DisableCtrls: Boolean = True): TTSAbsQuery; overload;
+    Function fnRunQuery       (Const aName: String; Const aParams: array of string; Const aValues: array of Variant; Const DisableCtrls: Boolean = True): TTSAbsQuery; overload;
+    Function fnRunQuery2      (Const aName, aSQL: String; Const aParams: array of string; Const aValues: array of Variant; Const DisableCtrls: Boolean = True): TTSAbsQuery; overload;
     //
     Function fnExecQuery      (Const aName: String): Integer; overload;
     Function fnExecQuery      (Const aName: String; Const aParam: String; Const aValue: Variant): Integer; overload;
@@ -53,25 +53,25 @@ implementation
 
 Uses MASCommonU, FormatResultU, MAS_HashsU;
 
-{ tAbsSQLCache }
+{ TAbsSQLCache }
 
-Constructor tAbsSQLCache.CreateWithDb (Const aDb: tABSDatabase; Const aPrepareOnCreate: Boolean);
+Constructor TAbsSQLCache.CreateWithDb (Const aDb: tABSDatabase; Const aPrepareOnCreate: Boolean);
 begin
   inherited Create;
   Self.PrepareOnCreate := aPrepareOnCreate;
   Self.DbConnection    := aDb;
 end;
 
-Function tAbsSQLCache.fnDoContainsSQL (Const aDataSet: tDataSet): Boolean;
+Function TAbsSQLCache.fnDoContainsSQL (Const aDataSet: tDataSet): Boolean;
 begin
   Inherited fnDoContainsSQL (aDataSet);
-  fnRaiseOnFalse ((aDataSet is tTSAbsQuery), 'Error: fnContainsSQL. A aDataSet must be of type tTSAbsQuery');
-  Result := (tTSAbsQuery (aDataSet).SQL.Count > 0);
+  fnRaiseOnFalse ((aDataSet is TTSAbsQuery), 'Error: fnContainsSQL. aDataSet must be of type TTSAbsQuery');
+  Result := (TTSAbsQuery (aDataSet).SQL.Count > 0);
 end;
 
-Function tAbsSQLCache.fnDoGetQuery (Const DbConnection: tObject): tDataSet;
+Function TAbsSQLCache.fnDoGetQuery (Const DbConnection: tObject): tDataSet;
 begin
-  fnRaiseOnFalse ((DbConnection is tABSDataBase), 'Error: fnGetQuery. A DbConnection must be of type tABSDataBase');
+  fnRaiseOnFalse ((DbConnection is tABSDataBase), 'Error: fnGetQuery. DbConnection must be of type TABSDataBase');
   Result := h_fnGetQuery (tABSDataBase (DbConnection));
 end;
 
@@ -80,10 +80,10 @@ end;
 //
 // Notes:
 //
-Function tAbsSQLCache.fnCast (Const aDataSet: tDataSet): tTSAbsQuery;
+Function TAbsSQLCache.fnCast (Const aDataSet: tDataSet): TTSAbsQuery;
 begin
-  fnRaiseOnFalse ((aDataSet is tTSAbsQuery), 'Error: fnCast. A aDataSet must be of type tTSAbsQuery');
-  Result := tTSAbsQuery (aDataSet);
+  fnRaiseOnFalse ((aDataSet is TTSAbsQuery), 'Error: fnCast. aDataSet must be of type TTSAbsQuery');
+  Result := TTSAbsQuery (aDataSet);
 end;
 
 // Routine: DoPrepare
@@ -91,17 +91,17 @@ end;
 //
 // Notes:
 //
-Procedure tAbsSQLCache.DoPrepare (Const aDataSet: tDataSet);
+Procedure TAbsSQLCache.DoPrepare (Const aDataSet: tDataSet);
 begin
   inherited;
-  fnRaiseOnFalse ((aDataSet is tTSAbsQuery), 'Error: Prepare. A aDataSet must be of type tTSAbsQuery');
-  if not IsEmpty (tTSAbsQuery (aDataSet).SQL.Text) then
-    tTSAbsQuery (aDataSet).Prepare;
+  fnRaiseOnFalse ((aDataSet is TTSAbsQuery), 'Error: Prepare. aDataSet must be of type TTSAbsQuery');
+  if not IsEmpty (TTSAbsQuery (aDataSet).SQL.Text) then
+    TTSAbsQuery (aDataSet).Prepare;
 end;
-Procedure tAbsSQLCache.DoPrepare (Const aDataSet: tDataSet; Const aSQL: String);
+Procedure TAbsSQLCache.DoPrepare (Const aDataSet: tDataSet; Const aSQL: String);
 begin
   inherited;
-  fnRaiseOnFalse ((aDataSet is tTSAbsQuery), 'Error: Prepare. A aDataSet must be of type tTSAbsQuery');
+  fnRaiseOnFalse ((aDataSet is TTSAbsQuery), 'Error: Prepare. aDataSet must be of type TTSAbsQuery');
   AssignSQL (aDataSet, aSQL);
   DoPrepare (aDataSet);
 end;
@@ -111,11 +111,11 @@ end;
 //
 // Notes:
 //
-Procedure tAbsSQLCache.AssignSQL (Const aDataSet: tDataSet; Const aSQL: String);
+Procedure TAbsSQLCache.AssignSQL (Const aDataSet: tDataSet; Const aSQL: String);
 begin
   inherited;
-  fnRaiseOnFalse ((aDataSet is tTSAbsQuery), 'Error: Prepare. A aDataSet must be of type tTSAbsQuery');
-  if not IsEmpty (aSQL) then tTSAbsQuery (aDataSet).SQL.Text := aSQL;
+  fnRaiseOnFalse ((aDataSet is TTSAbsQuery), 'Error: Prepare. aDataSet must be of type TTSAbsQuery');
+  if not IsEmpty (aSQL) then TTSAbsQuery (aDataSet).SQL.Text := aSQL;
 end;
 
 // Routine: fnSetup
@@ -123,16 +123,16 @@ end;
 //
 // Notes:
 //
-Function tAbsSQLCache.fnSetup (Const aName: String; Const aSQL: String; Const aCacheOption: tCacheOption): tTSAbsQuery;
+Function TAbsSQLCache.fnSetup (Const aName: String; Const aSQL: String; Const aCacheOption: tCacheOption): TTSAbsQuery;
 var
   lvCacheItem: tCacheItem;
 begin
   lvCacheItem := Int_fnQry (aName, aSQL, caException, aCacheOption);
   Result := fnCast (lvCacheItem.Qry);
 end;
-Function tAbsSQLCache.fnSetup (Const aName: String; Const aSQL: tStrings; Const aCacheOption: tCacheOption = coDefault): tTSAbsQuery;
+Function TAbsSQLCache.fnSetup (Const aName: String; Const aSQL: tStrings; Const aCacheOption: tCacheOption = coDefault): TTSAbsQuery;
 begin
-  fnRaiseOnFalse (Assigned (aSQL), 'Error: fnSetup. aSQL String list must be Assigned');
+  fnRaiseOnFalse (Assigned (aSQL), 'Error: fnSetup. aSQL String list must be assigned');
   Result := fnSetup (aName, aSQL.Text, aCacheOption);
 end;
 
@@ -141,19 +141,19 @@ end;
 //
 // Notes:
 //
-Function tAbsSQLCache.fnRunQuery (Const aName: String; Const DisableCtrls: Boolean): tTSAbsQuery;
+Function TAbsSQLCache.fnRunQuery (Const aName: String; Const DisableCtrls: Boolean): TTSAbsQuery;
 begin
   Result := fnRunQuery (aName, [], [], DisableCtrls);
 end;
-Function tAbsSQLCache.fnRunQuery (Const aName: String; Const aParam: String; Const aValue: Variant; Const DisableCtrls: Boolean): tTSAbsQuery;
+Function TAbsSQLCache.fnRunQuery (Const aName: String; Const aParam: String; Const aValue: Variant; Const DisableCtrls: Boolean): TTSAbsQuery;
 begin
   Result := fnRunQuery (aName, [aParam], [aValue], DisableCtrls);
 end;
-Function tAbsSQLCache.fnRunQuery (Const aName: String; Const aParams: array of string; Const aValues: array of Variant; Const DisableCtrls: Boolean): tTSAbsQuery;
+Function TAbsSQLCache.fnRunQuery (Const aName: String; Const aParams: array of string; Const aValues: array of Variant; Const DisableCtrls: Boolean): TTSAbsQuery;
 begin
   Result := fnRunQuery2 (aName, '', aParams, aValues, DisableCtrls);
 end;
-Function tAbsSQLCache.fnRunQuery2 (Const aName, aSQL: String; Const aParams: array of string; Const aValues: array of Variant; Const DisableCtrls: Boolean): tTSAbsQuery;
+Function TAbsSQLCache.fnRunQuery2 (Const aName, aSQL: String; Const aParams: array of string; Const aValues: array of Variant; Const DisableCtrls: Boolean): TTSAbsQuery;
 begin
   Result := fnSetup (aName, aSQL);
   if not Result.Prepared then DoPrepare (Result); //Result.Prepare;
@@ -165,17 +165,17 @@ end;
 //
 // Notes:
 //
-Function tAbsSQLCache.fnExecQuery (Const aName: String): Integer;
+Function TAbsSQLCache.fnExecQuery (Const aName: String): Integer;
 begin
   Result := fnExecQuery (aName, [], []);
 end;
-Function tAbsSQLCache.fnExecQuery (Const aName: String; Const aParam: String; Const aValue: Variant): Integer;
+Function TAbsSQLCache.fnExecQuery (Const aName: String; Const aParam: String; Const aValue: Variant): Integer;
 begin
   Result := fnExecQuery (aName, [aParam], [aValue]);
 end;
-Function tAbsSQLCache.fnExecQuery (Const aName: String; Const aParams: array of string; Const aValues: array of Variant): Integer;
+Function TAbsSQLCache.fnExecQuery (Const aName: String; Const aParams: array of string; Const aValues: array of Variant): Integer;
 var
-  lvQry: tTSAbsQuery;
+  lvQry: TTSAbsQuery;
 begin
   lvQry := fnSetup (aName, '');
   lvQry.ClearParameters;
@@ -189,23 +189,23 @@ end;
 //
 // Notes:
 //
-Function tAbsSQLCache.fnIsDbAssigned: Boolean;
+Function TAbsSQLCache.fnIsDbAssigned: Boolean;
 var
   lvObj: tObject;
 begin
   lvObj := DbConnection;
   if Assigned (lvObj) then
-    fnRaiseOnFalse ((lvObj is tABSDatabase), 'Error: GetDbConnection. A DbConnection must be of type tABSDatabase');
+    fnRaiseOnFalse ((lvObj is tABSDatabase), 'Error: GetDbConnection. DbConnection must be of type TABSDatabase');
   Result := Assigned (lvObj);
 end;
 
-Function tAbsSQLCache.fnDbConnection: tABSDatabase;
+Function TAbsSQLCache.fnDbConnection: tABSDatabase;
 var
   lvObj: tObject;
 begin
   lvObj := DbConnection;
-  fnRaiseOnFalse (Assigned (lvObj), 'Error: GetDbConnection. A DbConnection must be Assigned');
-  fnRaiseOnFalse ((lvObj is tABSDatabase), 'Error: GetDbConnection. A DbConnection must be of type tABSDatabase');
+  fnRaiseOnFalse (Assigned (lvObj), 'Error: GetDbConnection. DbConnection must be assigned');
+  fnRaiseOnFalse ((lvObj is tABSDatabase), 'Error: GetDbConnection. DbConnection must be of type TABSDatabase');
   Result := tABSDatabase (lvObj);
 end;
 

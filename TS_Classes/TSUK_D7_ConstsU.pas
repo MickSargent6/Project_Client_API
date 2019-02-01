@@ -57,13 +57,25 @@ Type
     Rate3:           tTSCurrencyRec;
   end;
 
-  tAbsenceType = (atNone, atEmpSick, atEmpHoliday, atEmpPaidLeave, atEmpUnPaidLeave, atGlobalStatutory,      
+  TAbsenceType = (atNone, atEmpSick, atEmpHoliday, atEmpPaidLeave, atEmpUnPaidLeave, atGlobalStatutory,
                    atGlobalOther, atGlobalHoliday, atGlobalPaidLeave, atGlobalUnPaidLeave);
 
-  //
   tPayRollSystemsFormat = (psLoad, psfNameOnly, psfValuePair, psfMapList);
 
 Const
+
+  TAbsenceNames: array[atNone..atGlobalUnPaidLeave] of string = (
+  '',
+  'Sick',
+  '%s',
+  'Paid Absence',
+  'UnPaid Absence',
+  'Statutory %s',
+  'Other',
+  'Global %s',
+  'Global Paid Absence',
+  'Global UnPaid Absence');
+
     cDEFAULT_IP_ADDRESS                     = '127.0.0.1';
     //
     cTCP_ERROR_CONNECT_NOT_ACTIVE           = '10061';      // WSAECONNREFUSED
@@ -547,6 +559,8 @@ Const
 
   cFLD_IO_NAME                                = 'Name';
   cFLD_IO_AS_DATETIME                         = 'AsDateTime';
+  cFLD_IO_TIME                                = 'Time';
+  cFLD_IO_INTDATE                             = 'IntDate';
   cFLD_IO_INOUT_STATUS                        = 'Status';
   cFLD_IO_LASTUPDATED                         = 'Last Status Time';
   cFLD_IO_LASTTRANSDATETIME                   = 'LastTransDateTime';
@@ -642,6 +656,9 @@ Const
   // Not a Trans table value used by IOBoard in Swipe32 to display old Transactions
   cTRANSACTION_OUT_OLD                        = 2;
   cTRANSACTION_IN_OLD                         = 3;
+
+  cUnknownLADCategory                         = 99;
+
   //
   //cI_NAME                                     = 'I_NAME';
   cI_RECTYPE                                  = 'I_RECTYPE';
@@ -774,7 +791,7 @@ begin
   else if IsEqual (aLicenseOptions, 'A') then Result := loDeskTop
   else if IsEqual (aLicenseOptions, 'Z') then Result := loSpare1
   else if IsEqual (aLicenseOptions, 'Y') then Result := loSpare2
-  else Raise Exception.CreateFmt ('Error: fnStrToLicenseOptions. Unknown Values Passed to Routine (%s)',[aLicenseOptions]);
+  else Raise Exception.CreateFmt ('Error: fnStrToLicenseOptions. Unknown values passed to routine (%s)',[aLicenseOptions]);
 end;
 Function fnLicenseOptionsToStr (Const aLicenseOptions: tLicenseOptions): String;
 begin
@@ -784,7 +801,7 @@ begin
     loDeskTop:       Result := 'A';
     loSpare1:        Result := 'Z';
     loSpare2:        Result := 'Y';
-    else Raise Exception.CreateFmt ('Error: fnLicenseOptionsToStr. Unknown Values Passed to Routine (%d)',[Ord (aLicenseOptions)]);
+    else Raise Exception.CreateFmt ('Error: fnLicenseOptionsToStr. Unknown values passed to routine (%d)',[Ord (aLicenseOptions)]);
   end;
 end;
 
@@ -800,7 +817,7 @@ begin
   else if IsEqual (aTimeSystemsRegions, 'UK')      then Result := tsrUK
   else if IsEqual (aTimeSystemsRegions, 'USA')     then Result := tsrUSA
   else if IsEqual (aTimeSystemsRegions, 'SPANISH') then Result := tsrSpanish
-  else Raise Exception.CreateFmt ('Error: fnStrToTimeSystemsRegions. Unknown Values Passed to Routine (%s)',[aTimeSystemsRegions]);
+  else Raise Exception.CreateFmt ('Error: fnStrToTimeSystemsRegions. Unknown values passed to routine (%s)',[aTimeSystemsRegions]);
 end;
 Function fnTimeSystemsRegionsToStr (Const aTimeSystemsRegions: tTimeSystemsRegions): String;
 begin
@@ -809,7 +826,7 @@ begin
     tsrUK:      Result := 'UK';
     tsrUSA:     Result := 'USA';
     tsrSpanish: Result := 'SPANISH';
-    else Raise Exception.CreateFmt ('Error: fnTimeSystemsRegionsToStr. Unknown Values Passed to Routine (%d)',[Ord (aTimeSystemsRegions)]);
+    else Raise Exception.CreateFmt ('Error: fnTimeSystemsRegionsToStr. Unknown values passed to routine (%d)',[Ord (aTimeSystemsRegions)]);
   end;
 end;
 
@@ -824,7 +841,7 @@ begin
   Case aPollingFileType of
     pftEveryTime: Result := 'E';
     pftJustOnce:  Result := 'O';
-    else Raise Exception.CreateFmt ('Error: fnPollingFileTypeToDbValue. Unknown Values Passed to Routine (%d)',[Ord (aPollingFileType)]);
+    else Raise Exception.CreateFmt ('Error: fnPollingFileTypeToDbValue. Unknown values passed to routine (%d)',[Ord (aPollingFileType)]);
   end;
 end;
 
@@ -846,7 +863,7 @@ begin
                                                     'A', tmAdmin,
                                                     'V', tmVerbose, '999'));  // Should cause an exeption
   except
-    Raise Exception.CreateFmt ('Error: fnDbValueToTypeMsg. Unknown Values Passed to Routine (%s)',[aTypeMsg]);
+    Raise Exception.CreateFmt ('Error: fnDbValueToTypeMsg. Unknown values passed to routine (%s)',[aTypeMsg]);
   end;
 end;
 Function fnTypeMsgToDbValue (Const aTypeMsg: tTypeMsg): String;
@@ -860,7 +877,7 @@ begin
     tmHeartBeat:   Result := 'H';
     tmAdmin:       Result := 'A';
     tmVerbose:     Result := 'V';
-    else Raise Exception.CreateFmt ('Error: fnTypeMsgToDbValue. Unknown Values Passed to Routine (%d)',[Ord (aTypeMsg)]);
+    else Raise Exception.CreateFmt ('Error: fnTypeMsgToDbValue. Unknown values passed to routine (%d)',[Ord (aTypeMsg)]);
   end;
 end;
 Function fnTypeMsgToDescription (Const aTypeMsg: tTypeMsg): String;
@@ -874,7 +891,7 @@ begin
     tmHeartBeat:   Result := 'HeartBeat';
     tmAdmin:       Result := 'Admin';
     tmVerbose:     Result := 'Verbose';
-    else Raise Exception.CreateFmt ('Error: fnTypeMsgToDescription. Unknown Values Passed to Routine (%d)',[Ord (aTypeMsg)]);
+    else Raise Exception.CreateFmt ('Error: fnTypeMsgToDescription. Unknown values passed to routine (%d)',[Ord (aTypeMsg)]);
   end;
 end;
 
@@ -891,7 +908,7 @@ begin
     pfsProcessed: Result := cPOLLING_STATUS_PROCESSED;
     pfsExcluded:  Result := cPOLLING_STATUS_EXCLUDED;
     pfsSuspect :  Result := cPOLLING_STATUS_SUSPECT;
-    else Raise Exception.CreateFmt ('Error: fnPollingFileStatusToDbValue. Unknown Values Passed to Routine (%d)',[Ord (aValue)]);
+    else Raise Exception.CreateFmt ('Error: fnPollingFileStatusToDbValue. Unknown values passed to routine (%d)',[Ord (aValue)]);
   end;
 end;
 
@@ -916,7 +933,7 @@ begin
     cMC_ONE:   Result := tsvlFull;
     cMC_TWO:   Result := tsvlError;
     cMC_THREE: Result := tsvlException;
-    else Raise Exception.CreateFmt ('Error: fnIntToVerboseLevel. Unknown Values Passed to Routine (%d)',[Ord (aValue)]);
+    else Raise Exception.CreateFmt ('Error: fnIntToVerboseLevel. Unknown values passed to routine (%d)',[Ord (aValue)]);
   end;
 end;
 Function fnStrToVerboseLevel (Const aValue: String): tTSVerboseLevel;
@@ -930,7 +947,7 @@ begin
     tsvlFull:      Result := 'Full';
     tsvlError:     Result := 'Error';
     tsvlException: Result := 'Exception';
-    else Raise Exception.CreateFmt ('Error: fnVerboseLevelToDescription. Unknown Values Passed to Routine (%d)',[Ord (aValue)]);
+    else Raise Exception.CreateFmt ('Error: fnVerboseLevelToDescription. Unknown values passed to routine (%d)',[Ord (aValue)]);
   end;
 end;
 
@@ -988,7 +1005,7 @@ begin
     cABSENCE_GBL_HOLIDAY:     Result := atGlobalHoliday;
     cABSENCE_GBL_PAIDLEAVE:   Result := atGlobalPaidLeave;
     cABSENCE_GBL_UNPAIDLEAVE: Result := atGlobalUnPaidLeave;
-    else Raise Exception.CreateFmt ('Error: fnIntToAbsenceType. Unknow Value passed to Routine. (%d)', [aValue]);
+    else Raise Exception.CreateFmt ('Error: fnIntToAbsenceType. Unknow value passed to routine. (%d)', [aValue]);
   end;
 end;
 

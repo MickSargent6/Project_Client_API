@@ -18,7 +18,7 @@ interface
 Uses Classes, SysUtils, MASStringListU, MASRecordStructuresU, MAS_TypesU, Dialogs, Db;
 
 type
-  tSimpleJSon = Class (tObject)
+  TSimpleJSon = Class (tObject)
   Private
     fList:    tMASStringList;
     fIntList: tMASStringList;
@@ -136,9 +136,9 @@ begin
 end;
 Function h_fnAddToArrayValue (Const aJSonStr: tJSONString2; Const aName: String; Const aValue: String): String;
 var
-  lvObj: tSimpleJSon;
+  lvObj: TSimpleJSon;
 begin
-  lvObj := tSimpleJSon.Create;
+  lvObj := TSimpleJSon.Create;
   Try
     lvObj.AsString := aJSonStr;
     lvObj.fnAdd (aName, aValue);
@@ -163,9 +163,9 @@ begin
 end;
 Function h_fnAddArrayValue (Const aJSonStr: tJSONString2; Const aParams: array of string; Const aValues: array of string): String; overload;
 var
-  lvObj: tSimpleJSon;
+  lvObj: TSimpleJSon;
 begin
-  lvObj := tSimpleJSon.Create;
+  lvObj := TSimpleJSon.Create;
   Try
     // only add if not empty
     if not IsEmpty (aJSonStr) then lvObj.AsString := aJSonStr;
@@ -184,9 +184,9 @@ end;
 //
 Function h_fnJSonToJSon (Const aJSonStr1, aJSonStr2: tJSONString2): String;
 var
-  lvObj: tSimpleJSon;
+  lvObj: TSimpleJSon;
 begin
-  lvObj := tSimpleJSon.Create;
+  lvObj := TSimpleJSon.Create;
   Try
     // only add if not empty
     if not IsEmpty (aJSonStr1) then lvObj.AsString := aJSonStr1;
@@ -205,9 +205,9 @@ end;
 //
 Function h_fnJSonAddFromList (Const aList: tStrings; Const aStrictPair, aIgnoreDuplicates: Boolean): String;
 var
-  lvObj: tSimpleJSon;
+  lvObj: TSimpleJSon;
 begin
-  lvObj := tSimpleJSon.Create;
+  lvObj := TSimpleJSon.Create;
   Try
     lvObj.fnAddFromList (aList, aStrictPair, aIgnoreDuplicates);
     Result := lvObj.AsString;
@@ -223,9 +223,9 @@ end;
 //
 Function h_fnGetAsString  (Const aJSonStr: tJSONString2; Const aName: String): tOKStrRec;
 var
-  lvObj: tSimpleJSon;
+  lvObj: TSimpleJSon;
 begin
-  lvObj := tSimpleJSon.Create;
+  lvObj := TSimpleJSon.Create;
   Try
     //
     lvObj.AsString := aJSonStr;
@@ -257,9 +257,9 @@ end;
 //
 Function h_fnGetAddFromJSon (Const aJSonStr: tJSONString2; Const aList: tStrings): Integer;
 var
-  lvObj: tSimpleJSon;
+  lvObj: TSimpleJSon;
 begin
-  lvObj := tSimpleJSon.Create;
+  lvObj := TSimpleJSon.Create;
   Try
     lvObj.AsString := aJSonStr;
     lvObj.fnGetAsList (aList);
@@ -276,9 +276,9 @@ end;
 //
 Function h_fnLoadFromFields (Const aFields: tFields): tJSONString2;
 var
-  lvObj: tSimpleJSon;
+  lvObj: TSimpleJSon;
 begin
-  lvObj := tSimpleJSon.Create;
+  lvObj := TSimpleJSon.Create;
   Try
     lvObj.fnLoadFromFields (aFields);
     Result := lvObj.AsString;
@@ -287,27 +287,27 @@ begin
   end;
 end;
 
-{ tSimpleJSon }
+{ TSimpleJSon }
 
-Constructor tSimpleJSon.Create;
+Constructor TSimpleJSon.Create;
 begin
   fList    := tMASStringList.Create;
   fIntList := tMASStringList.CreateSorted (dupIgnore);
 end;
-Constructor tSimpleJSon.Create (Const aJSonStr: String);
+Constructor TSimpleJSon.Create (Const aJSonStr: String);
 begin
   Create;
   Self.AsString := aJSonStr;
 end;
 
-Destructor tSimpleJSon.Destroy;
+Destructor TSimpleJSon.Destroy;
 begin
   fList.Free;
   fIntList.Free;
   inherited;
 end;
 
-Procedure tSimpleJSon.Clear;
+Procedure TSimpleJSon.Clear;
 begin
   fIntList.Clear;
   fList.Clear;
@@ -318,12 +318,12 @@ end;
 //
 // Notes:
 //
-Function tSimpleJSon.fnAdd (Const aName: String; Const aValue: Integer): Integer;
+Function TSimpleJSon.fnAdd (Const aName: String; Const aValue: Integer): Integer;
 begin
   Result := fnAdd (aName, IntToStr (aValue));
   fIntList.Add (aName);
 end;
-Function tSimpleJSon.fnAdd (Const aName, aValue: String): Integer;
+Function TSimpleJSon.fnAdd (Const aName, aValue: String): Integer;
 begin
   // see if the entry already exists, if so then update the entry else add
   Result := fList.IndexOfName (aName);
@@ -332,15 +332,15 @@ begin
     else           fList.Values [aName] := aValue;
   end;
 end;
-Function tSimpleJSon.fnAdd (Const aName: String; Const aValue: tDateTime): Integer;
+Function TSimpleJSon.fnAdd (Const aName: String; Const aValue: tDateTime): Integer;
 begin
   Result := fnAdd (aName, fnTS_DateTimeToNoneLocalizedFormat (aValue));
 end;
-Function tSimpleJSon.fnAdd (Const aName: String; Const aValue: Boolean): Integer;
+Function TSimpleJSon.fnAdd (Const aName: String; Const aValue: Boolean): Integer;
 begin
   Result := fnAdd (aName, BoolToStr (aValue));
 end;
-Function tSimpleJSon.fnAddCurrency (Const aName: String; Const aValue: Currency): Integer;
+Function TSimpleJSon.fnAddCurrency (Const aName: String; Const aValue: Currency): Integer;
 begin
   Result := fnAdd (aName, fnTS_CurrToStr (aValue));
 end;
@@ -350,11 +350,11 @@ end;
 //
 // Notes:
 //
-Function tSimpleJSon.fnGetAsBool (Const aName: String): Boolean;
+Function TSimpleJSon.fnGetAsBool (Const aName: String): Boolean;
 begin
   Result := StrToBool (fnGetAsStr2 (aName, True).Msg);
 end;
-Function tSimpleJSon.fnGetAsBool (Const aName: String; Const aDefault: Boolean): Boolean;
+Function TSimpleJSon.fnGetAsBool (Const aName: String; Const aDefault: Boolean): Boolean;
 var
   lvRes: tOKStrRec;
 begin
@@ -370,11 +370,11 @@ end;
 //
 // Notes:
 //
-Function tSimpleJSon.fnGetAsDate (Const aName: String): tDateTime;
+Function TSimpleJSon.fnGetAsDate (Const aName: String): tDateTime;
 begin
   Result := fnTS_NoneLocalizedFormatToDateTime (fnGetAsStr2 (aName, True).Msg);
 end;
-Function tSimpleJSon.fnGetAsDate2 (Const aName: String): tOKDateRec;
+Function TSimpleJSon.fnGetAsDate2 (Const aName: String): tOKDateRec;
 var
   lvRes: tOKStrRec;
 begin
@@ -387,11 +387,11 @@ end;
 //
 // Notes:
 //
-Function tSimpleJSon.fnGetAsInt (Const aName: String): Integer;
+Function TSimpleJSon.fnGetAsInt (Const aName: String): Integer;
 begin
   Result := StrToInt (fnGetAsStr2 (aName, True).Msg);
 end;
-Function tSimpleJSon.fnGetAsInt (Const aName: String; Const aDefault: Integer): Integer;
+Function TSimpleJSon.fnGetAsInt (Const aName: String; Const aDefault: Integer): Integer;
 var
   lvRes: tOKStrRec;
 begin
@@ -401,7 +401,7 @@ begin
     else  Result := aDefault;
   end;
 end;
-Function tSimpleJSon.fnGetAsInt2  (Const aName: String): tOKIntegerRec;
+Function TSimpleJSon.fnGetAsInt2  (Const aName: String): tOKIntegerRec;
 var
   lvRes: tOKStrRec;
 begin
@@ -417,16 +417,16 @@ end;
 //
 // Notes:
 //
-Function tSimpleJSon.fnGetAsStr (Const aName: String): String;
+Function TSimpleJSon.fnGetAsStr (Const aName: String): String;
 begin
   Result := fnGetAsStr2 (aName, True).Msg;
 end;
-Function tSimpleJSon.fnGetAsStr2 (Const aName: String; Const aRaiseNotFound: Boolean): tOKStrRec;
+Function TSimpleJSon.fnGetAsStr2 (Const aName: String; Const aRaiseNotFound: Boolean): tOKStrRec;
 begin
   Result := fList.fnValue (aName);
   if aRaiseNotFound then fnRaiseOnFalse (Result.OK, 'Error. fnGetAsStr2. Entry not found for Identifier. (%s)', [aName]);
 end;
-Function tSimpleJSon.fnGetAsStr2 (Const aName, aDefault: String): String;
+Function TSimpleJSon.fnGetAsStr2 (Const aName, aDefault: String): String;
 var
   lvRes: tOKStrRec;
 begin
@@ -439,7 +439,7 @@ end;
 //
 // Notes:
 //
-Function tSimpleJSon.fnGetAsCurrency  (Const aName: String): Currency;
+Function TSimpleJSon.fnGetAsCurrency  (Const aName: String): Currency;
 var
   lvRes: tOKCurrencyRec;
 begin
@@ -449,7 +449,7 @@ begin
     else  Raise Exception.Createfmt ('Error: fnGetAsCurrency. Failed to get Currency for (%s)', [aName]);
   end;
 end;
-Function tSimpleJSon.fnGetAsCurrency2 (Const aName: String): tOKCurrencyRec;
+Function TSimpleJSon.fnGetAsCurrency2 (Const aName: String): tOKCurrencyRec;
 var
   lvRes: tOKStrRec;
 begin
@@ -465,7 +465,7 @@ end;
 //
 // Notes:
 //
-Function tSimpleJSon.GetAsString: String;
+Function TSimpleJSon.GetAsString: String;
 var
   X:      Integer;
   lvPair: tValuePair;
@@ -495,7 +495,7 @@ end;
 // Notes:
 //  V2.0: Updated to check that the String start and ends with a { & }
 //
-Procedure tSimpleJSon.SetAsString (Value: String);
+Procedure TSimpleJSon.SetAsString (Value: String);
 var
   lvIsInt: Boolean;
   lvPair:  tValuePair;
@@ -541,13 +541,13 @@ end;
 //
 // Notes:
 //
-Procedure tSimpleJSon.AddJSonString (Const aJSonStr: String);
+Procedure TSimpleJSon.AddJSonString (Const aJSonStr: String);
 var
-  lvJSon: tSimpleJSon;
+  lvJSon: TSimpleJSon;
   x:      Integer;
   lvPair: tValuePair;
 begin
-  lvJSon := tSimpleJSon.Create;
+  lvJSon := TSimpleJSon.Create;
   Try
     lvJSon.AsString := aJSonStr;
     for x := 0 to lvJSon.fnCount-1 do begin
@@ -566,7 +566,7 @@ end;
 // Notes:
 //  V2.0: Updated to stop a empty Parameter name being added
 //
-Procedure tSimpleJSon.AddArraysValues (Const aParams, aValues: array of string);
+Procedure TSimpleJSon.AddArraysValues (Const aParams, aValues: array of string);
 var
   x: Integer;
 begin
@@ -577,14 +577,14 @@ begin
       Self.fnAdd (aParams[x], aValues[x]);
   end;
 end;
-Function tSimpleJSon.fnAddArrayValues (Const aParams, aValues: array of string): String;
+Function TSimpleJSon.fnAddArrayValues (Const aParams, aValues: array of string): String;
 begin
   //
   AddArraysValues (aParams, aValues);
   Result := Self.AsString;
 end;
 
-Function tSimpleJSon.fnAddFromList (Const aList: tStrings; Const aStrictPair, aIgnoreDuplicates: Boolean): String;
+Function TSimpleJSon.fnAddFromList (Const aList: tStrings; Const aStrictPair, aIgnoreDuplicates: Boolean): String;
 var
   x:      Integer;
   lvPair: tValuePair;
@@ -605,7 +605,7 @@ end;
 //
 // Notes:
 //
-Function tSimpleJSon.fnExists (Const aName: String): Boolean;
+Function TSimpleJSon.fnExists (Const aName: String): Boolean;
 begin
   Result := fnGetAsStr2 (aName, False).OK;
 end;
@@ -615,11 +615,11 @@ end;
 //
 // Notes:
 //
-Function tSimpleJSon.fnCount: Integer;
+Function TSimpleJSon.fnCount: Integer;
 begin
   Result := fList.Count;
 end;
-Function tSimpleJSon.fnGetPair (Const aIdx: Integer): tValuePair;
+Function TSimpleJSon.fnGetPair (Const aIdx: Integer): tValuePair;
 begin
   Result := GetValuePair (fList.Strings [aIdx]);
 end;
@@ -629,7 +629,7 @@ end;
 //
 // Notes:
 //
-Function tSimpleJSon.fnGetAsList (Const aList: tStrings; Const aAppendToList: Boolean = True): Integer;
+Function TSimpleJSon.fnGetAsList (Const aList: tStrings; Const aAppendToList: Boolean = True): Integer;
 begin
   Result := -1;
   if not Assigned (aList) then Exit;
@@ -643,7 +643,7 @@ end;
 //
 // Notes:
 //
-Function tSimpleJSon.fnLoadFromFields (Const aFields: tFields): Integer;
+Function TSimpleJSon.fnLoadFromFields (Const aFields: tFields): Integer;
 var
   x:       Integer;
   lvField: tField;

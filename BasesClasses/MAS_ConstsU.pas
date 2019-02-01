@@ -127,7 +127,7 @@ Const
    //
    // New Common Messages
    //
-   cmsg_CONFIRM_LOSS_CHANGES          = 'Changes have been made, Do you want to continue and loss the changes you have made?';
+   cmsg_CONFIRM_LOSS_CHANGES          = 'Changes have been made, Do you want to continue and lose the changes you have made?';
 
 
 implementation
