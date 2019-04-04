@@ -627,7 +627,7 @@ Const
   cFLD_TMP_START_DATE                         = 'Start Date';
 
   // Alto Table Names
-  cLOCAL_TABLE_IOBOARD                        = 'IOBoard';
+  cLOCAL_TABLE_IOBOARD                        = 'LAD';
 
   cLOCAL_INDEX_NAME                           = 'Name';
 
